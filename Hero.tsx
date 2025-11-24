@@ -65,12 +65,11 @@ export const Hero: React.FC = () => {
         <div className="relative flex justify-center md:justify-end animate-float order-1 md:order-2">
           
           <div className="relative z-10 w-[280px] sm:w-full max-w-md">
-             <img 
-                src={MASCOT_URL} 
-                alt="Yarndi Mascot" 
-                className="w-full h-auto object-contain drop-shadow-2xl filter contrast-125"
-             />
-             
+            <img 
+  src="/mascotthumbsup.png" 
+  alt="Mascot" 
+  className="w-full h-auto object-contain drop-shadow-2xl filter contrast-125"
+/>             
              {/* Floating badge */}
              <div className="absolute -bottom-4 -left-4 md:-bottom-6 md:-left-6 bg-white/90 backdrop-blur-md p-3 md:p-4 rounded-2xl shadow-soft border border-white/50 flex items-center gap-3 animate-bounce" style={{ animationDuration: '3s' }}>
                 <div className="bg-green-100 p-2 rounded-full">
