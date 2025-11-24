@@ -1,4 +1,3 @@
-
 import { Product, BlogPost, UseCase, Review, ProductComparison, Currency, Reward, Challenge } from './types';
 
 // --- CURRENCY HELPERS ---
@@ -40,16 +39,17 @@ export const products: Product[] = [
     longDescription: "**Stop the soreness before it starts.** Recovery+ isn't just hydration; it's a **biological reset button** for your post-game physiology.\n\nWe’ve fused **cold-pressed Australian Hemp Seed Oil** (nature’s most potent anti-inflammatory) with highly bioavailable **Magnesium Citrate** to flush out lactate and calm your nervous system immediately.\n\nForget the sugar crash of standard sports drinks. This is clinical-grade recovery masked as a refreshing watermelon crush.",
     price: 45.00,
     compareAtPrice: 65.00,
-    image: ph('Recovery+\nWatermelon Smash', '2dd4bf'), // Teal Base
-    flavours: ['Watermelon Smash', 'Blue Raspberry', 'Strawberry Kiwi', 'Lush Lemonade'],
+    image: '/recovery-watermelon.png',
+    // FLAVOUR NAMES UPDATED TO FILENAMES
+    flavours: ['recovery-watermelon.png', 'recovery-blue-raspberry.png', 'recovery-strawberry-kiwi.png', 'recovery-lemonade.png'], 
     flavourImages: {
-        'Watermelon Smash': ph('Recovery+\nWatermelon Smash', 'ef4444'), // Red
-        'Blue Raspberry': ph('Recovery+\nBlue Raspberry', '3b82f6'), // Blue
-        'Strawberry Kiwi': ph('Recovery+\nStrawberry Kiwi', 'f472b6'), // Pink
-        'Lush Lemonade': ph('Recovery+\nLush Lemonade', 'eab308') // Yellow
+        'recovery-watermelon.png': '/recovery-watermelon.png',
+        'recovery-blue-raspberry.png': '/recovery-blue-raspberry.png',
+        'recovery-strawberry-kiwi.png': '/recovery-strawberry-kiwi.png',
+        'recovery-lemonade.png': '/recovery-lemonade.png'
     },
     images: [
-        ph('Recovery+\nWatermelon Smash', 'ef4444'),
+        '/recovery-watermelon.png',
         ph('Recovery+\nPack Back', '111827'),
         ph('Recovery+\nPowder Texture', '2dd4bf'),
         unsplash('1599493347474-7345f652bc2d') // Lifestyle
@@ -98,16 +98,17 @@ export const products: Product[] = [
     longDescription: "**Ignite. Sustain. Repair.**\n\nStandard pre-workouts are a debt you pay back later with a crash. Energize^ is built on our proprietary **Tri-Action Energy System**:\n\n1. **Ignite**: 200mg of natural Caffeine from Green Tea kicks you into gear immediately.\n2. **Sustain**: L-Theanine smoothes out the curve, keeping you dialed in without the jitters.\n3. **Repair**: Edestin protein from **Australian Hemp** starts the recovery process before you even finish your set.\n\nNo water needed. No mess. Just pure Australian power.",
     price: 40.00,
     format: '8 Pack (90g Pouches)',
-    image: ph('Energize^\nLychee Burst', 'fbbf24', '000000'),
-    flavours: ['Lychee Burst', 'Pine Volt', 'Sour Watermelon', 'Mango Mash'],
+    image: '/energize-lychee.png',
+    // FLAVOUR NAMES UPDATED TO FILENAMES
+    flavours: ['energize-lychee.png', 'energize-pineapple.png', 'energize-watermelon.png', 'energize-mango.png'],
     flavourImages: {
-        'Lychee Burst': ph('Energize^\nLychee Burst', 'f9a8d4', '000000'),
-        'Pine Volt': ph('Energize^\nPine Volt', 'fde047', '000000'),
-        'Sour Watermelon': ph('Energize^\nSour Watermelon', 'fb7185', '000000'),
-        'Mango Mash': ph('Energize^\nMango Mash', 'fb923c', '000000')
+        'energize-lychee.png': '/energize-lychee.png',
+        'energize-pineapple.png': '/energize-pineapple.png',
+        'energize-watermelon.png': '/energize-watermelon.png',
+        'energize-mango.png': '/energize-mango.png'
     },
     images: [
-        ph('Energize^\nLychee Burst', 'f9a8d4', '000000'),
+        '/energize-lychee.png',
         ph('Energize^\nBox Detail', '000000'),
         ph('Energize^\nGel Texture', 'fbbf24', '000000'),
         unsplash('1550989460-0adf9ea622e2') // Gym/Active
@@ -157,16 +158,17 @@ export const products: Product[] = [
     longDescription: "**Hydration that actually absorbs.** Most sports drinks are just coloured sugar water that sits in your stomach. Drip° is a **precision-engineered hypotonic soda** that utilizes osmotic gradients to pull fluid into your bloodstream faster than water alone.\n\nInfused with **native Kakadu Plum** for oxidative support and **Bacillus Coagulans probiotics** to armor your gut against stress, it’s the daily hydration tool for the serious operator.",
     price: 35.00,
     format: '355ml Can x 12',
-    image: ph('Drip°\nGuava Sunrise', '38bdf8'),
-    flavours: ['Guava Sunrise', 'Passionfruit Punch', 'Kakadu Fizz', 'Creaming Soda'],
+    image: '/drip-guava.png',
+    // FLAVOUR NAMES UPDATED TO FILENAMES
+    flavours: ['drip-guava.png', 'drip-passionfruit.png', 'drip-kakadu-plum.png', 'drip-lychee.png'],
     flavourImages: {
-        'Guava Sunrise': ph('Drip°\nGuava Sunrise', 'fb7185'),
-        'Passionfruit Punch': ph('Drip°\nPassionfruit Punch', 'facc15', '000000'),
-        'Kakadu Fizz': ph('Drip°\nKakadu Fizz', 'a3e635', '000000'),
-        'Creaming Soda': ph('Drip°\nCreaming Soda', 'f472b6')
+        'drip-guava.png': '/drip-guava.png',
+        'drip-passionfruit.png': '/drip-passionfruit.png',
+        'drip-kakadu-plum.png': '/drip-kakadu-plum.png',
+        'drip-lychee.png': '/drip-lychee.png'
     },
     images: [
-        ph('Drip°\nGuava Sunrise', 'fb7185'),
+        '/drip-guava.png',
         ph('Drip°\nCan Detail', '38bdf8'),
         ph('Drip°\nPouring Shot', 'ffffff', '000000'),
         unsplash('1622483767028-3f66f32aef97') // Soda lifestyle
