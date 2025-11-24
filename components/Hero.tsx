@@ -10,8 +10,8 @@ interface HeroProps {
 
 export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
   // --- GOOGLE DRIVE SETUP ---
-  const MASCOT_ID = "PASTE_MASCOT_ID_HERE"; 
-  const MASCOT_URL = (MASCOT_ID.includes("PASTE") || MASCOT_ID.length < 10)
+  const MASCOT_ID = "mascot.png"; 
+  const MASCOT_URL = (MASCOT_ID.includes("mascot.png") || MASCOT_ID.length < 10)
     ? "https://placehold.co/600x600/ffffff/0e0e0e.png?text=Mascot" // Fallback
     : `https://drive.google.com/uc?export=view&id=${MASCOT_ID}`;
 
@@ -31,7 +31,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
         <div className="relative flex justify-center md:justify-end animate-float order-1 md:order-2">
           <div className="relative z-10 w-[200px] sm:w-[280px] md:w-full max-w-md">
              <img 
-                src={MASCOT_URL} 
+                src=mascot 
                 alt="Yarndi Mascot" 
                 className="w-full h-auto object-contain drop-shadow-2xl filter contrast-125"
              />
