@@ -7,10 +7,15 @@ export const Hero: React.FC = () => {
     <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden pt-10 pb-20 md:py-0 bg-[#FAFAFA] dark:bg-[#0a0a0a] transition-colors duration-300">
       {/* Background Gradients */}
       <div className="absolute inset-0 z-0 overflow-hidden">
-         <div className="absolute top-0 -left-4 w-72 h-72 md:w-96 md:h-96 bg-yarndi-green/20 dark:bg-yarndi-green/10 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
-         <div className="absolute top-0 -right-4 w-72 h-72 md:w-96 md:h-96 bg-blue-200/30 dark:bg-blue-900/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
-         <div className="absolute -bottom-32 left-20 w-72 h-72 md:w-96 md:h-96 bg-yellow-100/40 dark:bg-yellow-900/10 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-4000"></div>
-         <div className="absolute inset-0 bg-white/30 dark:bg-black/30 backdrop-blur-[2px]"></div>
+         {/* Blobs - Only visible in Light Mode (hidden in dark mode to prevent white haze) */}
+         <div className="dark:hidden absolute top-0 -left-4 w-72 h-72 md:w-96 md:h-96 bg-yarndi-green/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
+         <div className="dark:hidden absolute top-0 -right-4 w-72 h-72 md:w-96 md:h-96 bg-blue-200/30 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
+         <div className="dark:hidden absolute -bottom-32 left-20 w-72 h-72 md:w-96 md:h-96 bg-yellow-100/40 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-4000"></div>
+         
+         {/* Dark Mode Specific Glow (Subtle Green) */}
+         <div className="hidden dark:block absolute top-0 right-0 w-[500px] h-[500px] bg-yarndi-green/5 rounded-full filter blur-[100px]"></div>
+
+         <div className="absolute inset-0 bg-white/30 dark:bg-black/10 backdrop-blur-[2px]"></div>
       </div>
 
       <div className="container max-w-[1200px] mx-auto px-6 relative z-10 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
@@ -55,7 +60,7 @@ export const Hero: React.FC = () => {
              </div>
              
              {/* Floating badge */}
-             <div className="absolute -bottom-4 -left-4 md:-bottom-6 md:-left-6 bg-white/90 dark:bg-zinc-800/90 backdrop-blur-md p-3 md:p-4 rounded-2xl shadow-soft border border-white/50 dark:border-white/10 flex items-center gap-3 md:gap-4 animate-bounce-slow">
+             <div className="absolute -bottom-4 -left-4 md:-bottom-6 md:-left-6 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-md p-3 md:p-4 rounded-2xl shadow-soft border border-white/50 dark:border-white/10 flex items-center gap-3 md:gap-4 animate-bounce-slow">
                 <div className="bg-green-100 dark:bg-green-900/30 p-2 rounded-full">
                     <svg className="w-5 h-5 md:w-6 md:h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
                 </div>
