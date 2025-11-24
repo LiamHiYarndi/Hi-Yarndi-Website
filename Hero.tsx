@@ -10,11 +10,7 @@ export const Hero: React.FC = () => {
   // 3. Paste it below
   
   // Replace with your Mascot Image ID
-  const MASCOT_ID = "PASTE_MASCOT_ID_HERE"; 
-  const MASCOT_URL = (MASCOT_ID.includes("PASTE") || MASCOT_ID.length < 10)
-    ? "https://placehold.co/600x600/ffffff/0e0e0e.png?text=Mascot" // Fallback
-    : `https://drive.google.com/uc?export=view&id=${MASCOT_ID}`;
-
+  cont MASCOT_URL = "/mascotthumbsup.png;
   return (
     <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden pt-10 pb-20 md:py-0">
       
