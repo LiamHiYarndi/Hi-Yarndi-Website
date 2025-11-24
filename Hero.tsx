@@ -10,7 +10,7 @@ export const Hero: React.FC = () => {
   // 3. Paste it below
   
   // Replace with your Mascot Image ID
-  cont MASCOT_URL = "/mascotthumbsup.png;
+  cont MASCOT_URL = "/mascot.png;
   return (
     <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden pt-10 pb-20 md:py-0">
       
@@ -66,8 +66,8 @@ export const Hero: React.FC = () => {
           
           <div className="relative z-10 w-[280px] sm:w-full max-w-md">
             <img 
-  src="/mascotthumbsup.png" 
-  alt="Mascot" 
+  src="/mascot.png" 
+  alt="mascot" 
   className="w-full h-auto object-contain drop-shadow-2xl filter contrast-125"
 />             
              {/* Floating badge */}
