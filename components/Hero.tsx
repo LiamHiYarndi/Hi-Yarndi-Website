@@ -1,75 +1,88 @@
+
 import React from 'react';
-import { Button } from './Button'; 
-import { ChevronRight, Play } from 'lucide-react';
+import { Button } from './Button';
+import { Play } from 'lucide-react';
+import { PageView } from '../types';
 
-export const Hero: React.FC = () => {
+interface HeroProps {
+    onNavigate?: (page: PageView) => void;
+}
+
+export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
+  // --- GOOGLE DRIVE SETUP ---
+  const MASCOT_ID = "PASTE_MASCOT_ID_HERE"; 
+  const MASCOT_URL = (MASCOT_ID.includes("PASTE") || MASCOT_ID.length < 10)
+    ? "https://placehold.co/600x600/ffffff/0e0e0e.png?text=Mascot" // Fallback
+    : `https://drive.google.com/uc?export=view&id=${MASCOT_ID}`;
+
   return (
-    <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden pt-10 pb-20 md:py-0 bg-[#FAFAFA] dark:bg-[#0a0a0a] transition-colors duration-300">
-      {/* Background Gradients */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
-         {/* Blobs - Only visible in Light Mode (hidden in dark mode to prevent white haze) */}
-         <div className="dark:hidden absolute top-0 -left-4 w-72 h-72 md:w-96 md:h-96 bg-yarndi-green/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
-         <div className="dark:hidden absolute top-0 -right-4 w-72 h-72 md:w-96 md:h-96 bg-blue-200/30 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
-         <div className="dark:hidden absolute -bottom-32 left-20 w-72 h-72 md:w-96 md:h-96 bg-yellow-100/40 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-4000"></div>
-         
-         {/* Dark Mode Specific Glow (Subtle Green) */}
-         <div className="hidden dark:block absolute top-0 right-0 w-[500px] h-[500px] bg-yarndi-green/5 rounded-full filter blur-[100px]"></div>
-
-         <div className="absolute inset-0 bg-white/30 dark:bg-black/10 backdrop-blur-[2px]"></div>
+    <section className="relative min-h-[90vh] md:min-h-[calc(100vh-80px)] flex items-center justify-center overflow-hidden py-12 md:py-0">
+      
+      {/* Animated Mesh Gradient Background */}
+      <div className="absolute inset-0 z-0 bg-theme-bg overflow-hidden pointer-events-none">
+         <div className="absolute top-0 -left-4 w-64 h-64 md:w-96 md:h-96 bg-accent/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
+         <div className="absolute top-0 -right-4 w-64 h-64 md:w-96 md:h-96 bg-blue-200/30 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob" style={{ animationDelay: '2s' }}></div>
+         <div className="absolute -bottom-32 left-20 w-64 h-64 md:w-96 md:h-96 bg-yellow-100/40 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob" style={{ animationDelay: '4s' }}></div>
       </div>
 
-      <div className="container max-w-[1200px] mx-auto px-6 relative z-10 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-        {/* Text Content */}
-        <div className="animate-fade-in-up space-y-6 md:space-y-8 text-center md:text-left pt-8 md:pt-0 order-2 md:order-1">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 shadow-sm mx-auto md:mx-0">
-                <span className="w-2 h-2 rounded-full bg-yarndi-green animate-pulse"></span>
-                <span className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-premium-black dark:text-white">Plant Based Performance</span>
-            </div>
-            
-            <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-premium-black dark:text-white leading-[1.1]">
-                RECOVERY <br/>
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-yarndi-green to-emerald-600">EVOLVED.</span>
-            </h1>
-            
-            <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 font-medium max-w-lg leading-relaxed mx-auto md:mx-0">
-                The electrolyte blend built for the unconventional athlete. Powered by Australian Hemp. Zero sugar crash.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row items-center md:items-start gap-4 justify-center md:justify-start w-full">
-                <Button variant="primary" className="shadow-xl shadow-emerald-900/10 w-full sm:w-auto">
-                    Shop The Drop
-                </Button>
-                
-                <button className="group flex items-center justify-center gap-3 px-6 py-3 rounded-full bg-white/50 dark:bg-white/5 backdrop-blur-md border border-gray-200 dark:border-white/10 hover:bg-white dark:hover:bg-white/10 transition-all">
-                    <div className="w-8 h-8 rounded-full bg-premium-black dark:bg-white flex items-center justify-center group-hover:scale-110 transition-transform">
-                        <Play className="w-3 h-3 text-white dark:text-black fill-current ml-0.5" />
-                    </div>
-                    <span className="text-sm font-bold text-premium-black dark:text-white">Watch the Film</span>
-                </button>
-            </div>
+      <div className="container max-w-[1200px] mx-auto px-6 relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+        
+        {/* Text Content - Order 1 on Mobile */}
+        <div className="animate-fade-in-up space-y-5 md:space-y-6 text-center md:text-left order-1 md:order-1 flex flex-col items-center md:items-start pt-8 md:pt-0">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-theme-card border border-theme-border shadow-sm">
+            <span className="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+            <span className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-theme-text">Plant Based Performance</span>
+          </div>
+          
+          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter text-theme-text leading-[0.95]">
+            RECOVERY <br/>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-emerald-600">EVOLVED.</span>
+          </h1>
+          
+          <p className="text-base md:text-xl text-theme-sub font-medium max-w-md leading-relaxed px-2 md:px-0">
+            The electrolyte blend built for the unconventional athlete. 
+            Powered by Australian Hemp. Zero sugar crash.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto pt-4">
+            <Button 
+                variant="primary" 
+                className="w-full sm:w-auto shadow-xl"
+                onClick={() => onNavigate?.('shop')}
+            >
+              Shop The Drop
+            </Button>
+            <button className="group flex items-center justify-center gap-3 px-6 py-3 rounded-full bg-theme-card/50 backdrop-blur-md border border-theme-border hover:bg-theme-card transition-all w-full sm:w-auto">
+              <div className="w-8 h-8 rounded-full bg-theme-text flex items-center justify-center group-hover:scale-110 transition-transform">
+                 <Play className="w-3 h-3 text-theme-bg fill-current ml-0.5" />
+              </div>
+              <span className="text-sm font-bold text-theme-text">Watch the Film</span>
+            </button>
+          </div>
         </div>
 
-        {/* IMAGE SECTION */}
-        <div className="relative flex justify-center md:justify-end animate-float order-1 md:order-2">
-             <div className="relative z-10 w-[280px] sm:w-full max-w-md">
-                <img
-                  src="/mascot.png"
-                  alt="Mascot"
-                  className="w-full h-auto object-contain drop-shadow-2xl filter contrast-125"
-                />
-             </div>
+        {/* Visual Asset - Order 2 on Mobile */}
+        <div className="relative flex justify-center md:justify-end animate-float order-2 md:order-2 mt-4 md:mt-0">
+          <div className="relative z-10 w-[240px] sm:w-[280px] md:w-full max-w-md">
+             <img 
+                src={MASCOT_URL} 
+                alt="Yarndi Mascot" 
+                className="w-full h-auto object-contain drop-shadow-2xl filter contrast-125"
+             />
              
              {/* Floating badge */}
-             <div className="absolute -bottom-4 -left-4 md:-bottom-6 md:-left-6 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-md p-3 md:p-4 rounded-2xl shadow-soft border border-white/50 dark:border-white/10 flex items-center gap-3 md:gap-4 animate-bounce-slow">
-                <div className="bg-green-100 dark:bg-green-900/30 p-2 rounded-full">
-                    <svg className="w-5 h-5 md:w-6 md:h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
+             <div className="absolute -bottom-2 -left-4 md:-bottom-4 md:-left-4 bg-theme-card/90 backdrop-blur-md p-3 rounded-2xl shadow-lg border border-theme-border flex items-center gap-3 animate-bounce" style={{ animationDuration: '3s' }}>
+                <div className="bg-green-100 p-2 rounded-full">
+                    <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
                 </div>
                 <div>
-                    <div className="text-[10px] md:text-xs text-gray-500 dark:text-gray-400 font-bold uppercase">Magnesium</div>
-                    <div className="text-xs md:text-sm font-bold text-premium-black dark:text-white">300mg Added</div>
+                    <div className="text-[10px] text-theme-sub font-bold uppercase">Magnesium</div>
+                    <div className="text-xs font-bold text-theme-text">300mg Added</div>
                 </div>
              </div>
+          </div>
         </div>
+
       </div>
     </section>
   );

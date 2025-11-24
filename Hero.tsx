@@ -9,6 +9,13 @@ export const Hero: React.FC = () => {
   // 2. Copy the ID (the random characters between /d/ and /view)
   // 3. Paste it below
   
+  // Replace with your Mascot Image ID
+  const MASCOT_ID = "PASTE_MASCOT_ID_HERE"; 
+  const MASCOT_URL = (MASCOT_ID.includes("PASTE") || MASCOT_ID.length < 10)
+    ? "https://placehold.co/600x600/ffffff/0e0e0e.png?text=Mascot" // Fallback
+    : `https://drive.google.com/uc?export=view&id=${MASCOT_ID}`;
+
+  return (
     <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden pt-10 pb-20 md:py-0">
       
       {/* Animated Mesh Gradient Background */}
@@ -62,11 +69,12 @@ export const Hero: React.FC = () => {
         <div className="relative flex justify-center md:justify-end animate-float order-1 md:order-2">
           
           <div className="relative z-10 w-[280px] sm:w-full max-w-md">
-            <img 
-  src="https://placehold.co/400" 
-  alt="Test Image" 
-  className="w-full h-auto object-contain drop-shadow-2xl filter contrast-125"
-/>
+             <img 
+                src={MASCOT_URL} 
+                alt="Yarndi Mascot" 
+                className="w-full h-auto object-contain drop-shadow-2xl filter contrast-125"
+             />
+             
              {/* Floating badge */}
              <div className="absolute -bottom-4 -left-4 md:-bottom-6 md:-left-6 bg-white/90 backdrop-blur-md p-3 md:p-4 rounded-2xl shadow-soft border border-white/50 flex items-center gap-3 animate-bounce" style={{ animationDuration: '3s' }}>
                 <div className="bg-green-100 p-2 rounded-full">

@@ -1,9 +1,10 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { Product, Currency } from '../types';
 import { Button } from './Button';
 import ReactMarkdown from 'react-markdown';
 import { formatPrice } from '../data';
-import { ArrowLeft, Check, ChevronDown, ChevronUp, Star, ShieldCheck, Leaf, Zap, Droplets, Brain, Dumbbell, Moon, Flame, FlaskConical, Shirt, Scissors, Sun, Share2, Instagram, Microscope } from 'lucide-react';
+import { ArrowLeft, Check, ChevronDown, ChevronUp, Star, ShieldCheck, Leaf, Zap, Droplets, Brain, Dumbbell, Moon, Flame, FlaskConical, Shirt, Scissors, Sun, Share2, Microscope } from 'lucide-react';
 import { ComparisonSection } from './ComparisonSection';
 import { ProductReviews } from './ProductReviews';
 
@@ -16,11 +17,7 @@ interface Props {
 
 export const PageProduct: React.FC<Props> = ({ product, onBack, onAddToCart, currency }) => {
   const [selectedBundle, setSelectedBundle] = useState(1);
-  
-  // FIX 1: Initialize selectedFlavour state using the first variant's name
-  const initialVariantName = product.variants?.[0]?.name || '';
-  const [selectedFlavour, setSelectedFlavour] = useState(initialVariantName);
-  
+  const [selectedFlavour, setSelectedFlavour] = useState(product.flavours?.[0] || '');
   const [openSection, setOpenSection] = useState<string | null>('benefits'); 
   const [showStickyBar, setShowStickyBar] = useState(false);
   const [showShareToast, setShowShareToast] = useState(false);
@@ -28,33 +25,22 @@ export const PageProduct: React.FC<Props> = ({ product, onBack, onAddToCart, cur
   const mainCtaRef = useRef<HTMLDivElement>(null);
   const isMerch = product.range === 'Merch';
 
-  // Helper to find the current active variant object based on the selectedFlavour name
-  const activeVariant = product.variants?.find(v => v.name === selectedFlavour);
-  
   // Images
   const [activeImage, setActiveImage] = useState(product.image);
-  
-  // FIX 2: Reset state when product changes
   useEffect(() => {
     setActiveImage(product.image);
-    setSelectedFlavour(product.variants?.[0]?.name || ''); // Use variants for reset
+    setSelectedFlavour(product.flavours?.[0] || '');
     setSelectedBundle(1);
   }, [product]);
 
-  // FIX 3: Auto-switch image when flavour changes (uses activeVariant)
+  // Auto-switch image when flavour changes
   useEffect(() => {
-    if (activeVariant) {
-      setActiveImage(activeVariant.image);
-    } else {
-        // Fallback to default image if variant is not found (e.g., initial load)
-        setActiveImage(product.image); 
+    if (product.flavourImages && selectedFlavour && product.flavourImages[selectedFlavour]) {
+      setActiveImage(product.flavourImages[selectedFlavour]);
     }
-  }, [selectedFlavour, product.variants, activeVariant, product.image]); // Dependency array updated
+  }, [selectedFlavour, product.flavourImages]);
 
-  // FIX 4: Use the image from the first variant as the first gallery image if product.images is missing
   const galleryImages = product.images && product.images.length > 0 ? product.images : [product.image];
-  
-  // The rest of the logic remains unchanged...
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -154,11 +140,11 @@ export const PageProduct: React.FC<Props> = ({ product, onBack, onAddToCart, cur
             </div>
         </div>
 
-        {/* Mobile Header (Replaces main header slightly) */}
-        <div className="sticky top-[70px] z-30 bg-theme-card/90 backdrop-blur border-b border-theme-border px-4 py-3 flex items-center gap-3 lg:hidden animate-fade-in-up text-theme-text shadow-sm safe-top">
-            <button onClick={onBack} className="p-1 -ml-1"><ArrowLeft className="w-5 h-5" /></button>
+        {/* Mobile Sticky Header - Only shows if scrolling up ideally, but simplified here */}
+        <div className="sticky top-[70px] z-20 bg-theme-card/95 backdrop-blur border-b border-theme-border px-4 py-3 flex items-center gap-3 lg:hidden animate-fade-in-up text-theme-text shadow-sm safe-top">
+            <button onClick={onBack} className="p-1 -ml-1 active:scale-95"><ArrowLeft className="w-5 h-5" /></button>
             <span className="font-bold text-sm truncate flex-1">{product.title}</span>
-            <button onClick={handleShare} className="ml-auto p-1"><Share2 className="w-5 h-5 text-theme-text" /></button>
+            <button onClick={handleShare} className="ml-auto p-1 active:scale-95"><Share2 className="w-5 h-5 text-theme-text" /></button>
         </div>
 
         <div className="container mx-auto px-4 md:px-6 py-6 md:py-16">
@@ -169,23 +155,25 @@ export const PageProduct: React.FC<Props> = ({ product, onBack, onAddToCart, cur
                     <div className="aspect-square bg-theme-bg rounded-3xl overflow-hidden relative group shadow-soft">
                         <img src={activeImage} alt={product.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                         {product.tag && (
-                            <span className="absolute top-4 left-4 md:top-6 md:left-6 px-3 py-1 md:px-4 md:py-2 rounded-full text-xs font-bold uppercase tracking-wider bg-yarndi-green text-off-black shadow-md animate-fade-in-up delay-300">
+                            <span className="absolute top-4 left-4 md:top-6 md:left-6 px-3 py-1 md:px-4 md:py-2 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider bg-yarndi-green text-off-black shadow-md animate-fade-in-up delay-300">
                                 {product.tag}
                             </span>
                         )}
                     </div>
-                    {/* Thumbnails - Horizontal Scroll on Mobile */}
-                    <div className="flex gap-3 overflow-x-auto pb-4 no-scrollbar lg:grid lg:grid-cols-4 lg:gap-4 snap-x px-1">
-                        {galleryImages.map((img, idx) => (
-                            <div 
-                                key={idx} 
-                                onClick={() => setActiveImage(img)}
-                                className={`snap-start flex-shrink-0 w-20 h-20 md:w-auto md:h-auto aspect-square bg-theme-bg rounded-xl cursor-pointer hover:opacity-80 transition-opacity border-2 ${activeImage === img ? 'border-theme-text' : 'border-transparent'}`}
-                            >
-                                <img src={img} className="w-full h-full object-cover rounded-lg" />
-                            </div>
-                        ))}
-                    </div>
+                    {/* Thumbnails - Improved Mobile Scroll */}
+                    {galleryImages.length > 1 && (
+                        <div className="flex gap-3 overflow-x-auto pb-4 no-scrollbar lg:grid lg:grid-cols-4 lg:gap-4 snap-x px-1 -mx-4 md:mx-0 pl-4 md:pl-0">
+                            {galleryImages.map((img, idx) => (
+                                <div 
+                                    key={idx} 
+                                    onClick={() => setActiveImage(img)}
+                                    className={`snap-start flex-shrink-0 w-20 h-20 md:w-auto md:h-auto aspect-square bg-theme-bg rounded-xl cursor-pointer hover:opacity-80 transition-opacity border-2 ${activeImage === img ? 'border-theme-text' : 'border-transparent'}`}
+                                >
+                                    <img src={img} className="w-full h-full object-cover rounded-lg" />
+                                </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
 
                 {/* Right: Info & Actions */}
@@ -226,27 +214,26 @@ export const PageProduct: React.FC<Props> = ({ product, onBack, onAddToCart, cur
                     {/* === PRIMARY ACTION AREA === */}
                     <div ref={mainCtaRef} className="space-y-6 mb-8 p-1">
                         
-                        {/* 1. Flavour/Size Selection - FIX APPLIED HERE */}
-                        {product.variants && product.variants.length > 0 && (
+                        {/* 1. Flavour/Size Selection */}
+                        {product.flavours && (
                             <div>
                                 <label className="block text-xs font-bold uppercase text-gray-400 mb-3">
                                     {isMerch ? 'Select Size' : 'Select Flavour'}
                                 </label>
                                 <div className="flex flex-wrap gap-2">
-                                    {/* FIX: Map over product.variants to get the human-readable variant.name */}
-                                    {product.variants.map(variant => (
+                                    {product.flavours.map(f => (
                                         <button
-                                            key={variant.name}
-                                            onClick={() => setSelectedFlavour(variant.name)}
+                                            key={f}
+                                            onClick={() => setSelectedFlavour(f)}
                                             className={`
                                                 ${isMerch ? 'min-w-[3rem] h-12 px-3' : 'px-4 py-3'}
                                                 rounded-xl text-sm font-bold border-2 transition-all duration-200 
-                                                ${selectedFlavour === variant.name 
+                                                ${selectedFlavour === f 
                                                     ? 'border-theme-text bg-theme-text text-theme-card scale-105 shadow-md' 
                                                     : 'border-theme-border text-theme-sub hover:border-gray-300 hover:scale-105'
                                                 }`}
                                         >
-                                            {variant.name} 
+                                            {f}
                                         </button>
                                     ))}
                                 </div>

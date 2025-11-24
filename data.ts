@@ -1,3 +1,4 @@
+
 import { Product, BlogPost, UseCase, Review, ProductComparison, Currency, Reward, Challenge } from './types';
 
 // --- CURRENCY HELPERS ---
@@ -39,16 +40,16 @@ export const products: Product[] = [
     longDescription: "**Stop the soreness before it starts.** Recovery+ isn't just hydration; it's a **biological reset button** for your post-game physiology.\n\nWe’ve fused **cold-pressed Australian Hemp Seed Oil** (nature’s most potent anti-inflammatory) with highly bioavailable **Magnesium Citrate** to flush out lactate and calm your nervous system immediately.\n\nForget the sugar crash of standard sports drinks. This is clinical-grade recovery masked as a refreshing watermelon crush.",
     price: 45.00,
     compareAtPrice: 65.00,
-    image: '/recovery-watermelon.png', 
-    // FLAVOURS/IMAGES REPLACED WITH VARIANTS ARRAY
-    variants: [ 
-        { name: 'Watermelon Smash', image: '/recovery-watermelon.png' },
-        { name: 'Blue Raspberry', image: '/recovery-blue-raspberry.png' },
-        { name: 'Strawberry Kiwi', image: '/recovery-strawberry-kiwi.png' },
-        { name: 'Lush Lemonade', image: '/recovery-lemonade.png' }
-    ],
+    image: ph('Recovery+\nWatermelon Smash', '2dd4bf'), // Teal Base
+    flavours: ['Watermelon Smash', 'Blue Raspberry', 'Strawberry Kiwi', 'Lush Lemonade'],
+    flavourImages: {
+        'Watermelon Smash': ph('Recovery+\nWatermelon Smash', 'ef4444'), // Red
+        'Blue Raspberry': ph('Recovery+\nBlue Raspberry', '3b82f6'), // Blue
+        'Strawberry Kiwi': ph('Recovery+\nStrawberry Kiwi', 'f472b6'), // Pink
+        'Lush Lemonade': ph('Recovery+\nLush Lemonade', 'eab308') // Yellow
+    },
     images: [
-        '/recovery-watermelon.png',
+        ph('Recovery+\nWatermelon Smash', 'ef4444'),
         ph('Recovery+\nPack Back', '111827'),
         ph('Recovery+\nPowder Texture', '2dd4bf'),
         unsplash('1599493347474-7345f652bc2d') // Lifestyle
@@ -97,16 +98,16 @@ export const products: Product[] = [
     longDescription: "**Ignite. Sustain. Repair.**\n\nStandard pre-workouts are a debt you pay back later with a crash. Energize^ is built on our proprietary **Tri-Action Energy System**:\n\n1. **Ignite**: 200mg of natural Caffeine from Green Tea kicks you into gear immediately.\n2. **Sustain**: L-Theanine smoothes out the curve, keeping you dialed in without the jitters.\n3. **Repair**: Edestin protein from **Australian Hemp** starts the recovery process before you even finish your set.\n\nNo water needed. No mess. Just pure Australian power.",
     price: 40.00,
     format: '8 Pack (90g Pouches)',
-    image: '/energize-lychee.png',
-    // FLAVOURS/IMAGES REPLACED WITH VARIANTS ARRAY
-    variants: [
-        { name: 'Lychee Burst', image: '/energize-lychee.png' },
-        { name: 'Pine Volt', image: '/energize-pineapple.png' },
-        { name: 'Sour Watermelon', image: '/energize-watermelon.png' },
-        { name: 'Mango Mash', image: '/energize-mango.png' }
-    ],
+    image: ph('Energize^\nLychee Burst', 'fbbf24', '000000'),
+    flavours: ['Lychee Burst', 'Pine Volt', 'Sour Watermelon', 'Mango Mash'],
+    flavourImages: {
+        'Lychee Burst': ph('Energize^\nLychee Burst', 'f9a8d4', '000000'),
+        'Pine Volt': ph('Energize^\nPine Volt', 'fde047', '000000'),
+        'Sour Watermelon': ph('Energize^\nSour Watermelon', 'fb7185', '000000'),
+        'Mango Mash': ph('Energize^\nMango Mash', 'fb923c', '000000')
+    },
     images: [
-        '/energize-lychee.png',
+        ph('Energize^\nLychee Burst', 'f9a8d4', '000000'),
         ph('Energize^\nBox Detail', '000000'),
         ph('Energize^\nGel Texture', 'fbbf24', '000000'),
         unsplash('1550989460-0adf9ea622e2') // Gym/Active
@@ -156,16 +157,16 @@ export const products: Product[] = [
     longDescription: "**Hydration that actually absorbs.** Most sports drinks are just coloured sugar water that sits in your stomach. Drip° is a **precision-engineered hypotonic soda** that utilizes osmotic gradients to pull fluid into your bloodstream faster than water alone.\n\nInfused with **native Kakadu Plum** for oxidative support and **Bacillus Coagulans probiotics** to armor your gut against stress, it’s the daily hydration tool for the serious operator.",
     price: 35.00,
     format: '355ml Can x 12',
-    image: '/drip-guava.png',
-    // FLAVOURS/IMAGES REPLACED WITH VARIANTS ARRAY
-    variants: [
-        { name: 'Guava Sunrise', image: '/drip-guava.png' },
-        { name: 'Passionfruit Punch', image: '/drip-passionfruit.png' },
-        { name: 'Kakadu Fizz', image: '/drip-kakadu-plum.png' },
-        { name: 'Creaming Soda', image: '/drip-lychee.png' }
-    ],
+    image: ph('Drip°\nGuava Sunrise', '38bdf8'),
+    flavours: ['Guava Sunrise', 'Passionfruit Punch', 'Kakadu Fizz', 'Creaming Soda'],
+    flavourImages: {
+        'Guava Sunrise': ph('Drip°\nGuava Sunrise', 'fb7185'),
+        'Passionfruit Punch': ph('Drip°\nPassionfruit Punch', 'facc15', '000000'),
+        'Kakadu Fizz': ph('Drip°\nKakadu Fizz', 'a3e635', '000000'),
+        'Creaming Soda': ph('Drip°\nCreaming Soda', 'f472b6')
+    },
     images: [
-        '/drip-guava.png',
+        ph('Drip°\nGuava Sunrise', 'fb7185'),
         ph('Drip°\nCan Detail', '38bdf8'),
         ph('Drip°\nPouring Shot', 'ffffff', '000000'),
         unsplash('1622483767028-3f66f32aef97') // Soda lifestyle
@@ -198,7 +199,7 @@ export const products: Product[] = [
         { nutrient: 'Sodium', perServe: '15 mg', per100: '4 mg' },
         { nutrient: 'Vitamin C', perServe: '30 mg', per100: '8 mg' }
     ],
-    ingredientsList: 'Carbonated Water, Inulin, Acacia Fibre, Cane Sugar, Hemp Seed Extract (0.08%), Citric Acid, Botanical Blend (Kudzu, Calendula, Rosemary), Vitamin C, Bacillus coagulans GBI-30 6086, Potassium Sorbate.'
+    ingredientsList: 'Carbonated Water, Inulin, Acacia Fibre, Cane Sugar, Natural Fruit Flavour, Hemp Seed Extract (0.08%), Citric Acid, Botanical Blend (Kudzu, Calendula, Rosemary), Vitamin C, Bacillus coagulans GBI-30 6086, Potassium Sorbate.'
   },
 
   // --- FUEL* ---
@@ -212,13 +213,13 @@ export const products: Product[] = [
     price: 45.00,
     format: '12 Bars',
     image: ph('Fuel*\nPeanut Butter', 'a16207'),
-    // FLAVOURS/IMAGES REPLACED WITH VARIANTS ARRAY
-    variants: [
-        { name: 'Peanut Butter Crunch', image: ph('Fuel*\nPeanut Butter', 'd97706') },
-        { name: 'Choc Chip Cookie Dough', image: ph('Fuel*\nCookie Dough', 'fcd34d', '000000') },
-        { name: 'Salted Caramel', image: ph('Fuel*\nSalted Caramel', 'b45309') },
-        { name: 'Coconut Macadamia', image: ph('Fuel*\nCoconut Mac', 'f1f5f9', '000000') }
-    ],
+    flavours: ['Peanut Butter Crunch', 'Choc Chip Cookie Dough', 'Salted Caramel', 'Coconut Macadamia'],
+    flavourImages: {
+        'Peanut Butter Crunch': ph('Fuel*\nPeanut Butter', 'd97706'),
+        'Choc Chip Cookie Dough': ph('Fuel*\nCookie Dough', 'fcd34d', '000000'),
+        'Salted Caramel': ph('Fuel*\nSalted Caramel', 'b45309'),
+        'Coconut Macadamia': ph('Fuel*\nCoconut Mac', 'f1f5f9', '000000')
+    },
     images: [
         ph('Fuel*\nPeanut Butter', 'd97706'),
         ph('Fuel*\nWrapper Detail', '3f2e18'),
@@ -267,14 +268,14 @@ export const products: Product[] = [
     longDescription: "**Wear the plant.**\n\nThis isn't your standard cheap promo gear. This is a heavyweight, 450gsm hoodie cut from a sustainable blend of **55% Industrial Hemp and 45% Organic Cotton**.\n\nFeaturing a dropped shoulder, boxy fit, and our signature puff-print logo on the back. It breathes better than cotton and gets softer with every wash.",
     price: 95.00,
     image: ph('Hoodie\nOff Black', '1d1d1f'),
-    // FLAVOURS/IMAGES REPLACED WITH VARIANTS ARRAY
-    variants: [
-        { name: 'S', image: ph('Hoodie\nOff Black', '1d1d1f') },
-        { name: 'M', image: ph('Hoodie\nOff Black', '1d1d1f') },
-        { name: 'L', image: ph('Hoodie\nOff Black', '1d1d1f') },
-        { name: 'XL', image: ph('Hoodie\nOff Black', '1d1d1f') },
-        { name: 'XXL', image: ph('Hoodie\nOff Black', '1d1d1f') }
-    ],
+    flavours: ['S', 'M', 'L', 'XL', 'XXL'], // Using flavours array for Sizes
+    flavourImages: {
+        'S': ph('Hoodie\nOff Black', '1d1d1f'),
+        'M': ph('Hoodie\nOff Black', '1d1d1f'),
+        'L': ph('Hoodie\nOff Black', '1d1d1f'),
+        'XL': ph('Hoodie\nOff Black', '1d1d1f'),
+        'XXL': ph('Hoodie\nOff Black', '1d1d1f')
+    },
     images: [
         ph('Hoodie\nFront View', '1d1d1f'),
         ph('Hoodie\nBack Detail', '1d1d1f'),
@@ -302,13 +303,7 @@ export const products: Product[] = [
     longDescription: "The new daily driver. A vintage-washed, slightly oversized tee featuring the Hi Yarndi 'Club' logo in raised puff print.\n\nPre-shrunk to minimize shrinkage and designed with a high neck rib for that premium streetwear silhouette.",
     price: 55.00,
     image: ph('Club Tee\nCream', 'f3f4f6', '000000'),
-    // FLAVOURS/IMAGES REPLACED WITH VARIANTS ARRAY
-    variants: [
-        { name: 'S', image: ph('Club Tee\nCream', 'f3f4f6', '000000') },
-        { name: 'M', image: ph('Club Tee\nCream', 'f3f4f6', '000000') },
-        { name: 'L', image: ph('Club Tee\nCream', 'f3f4f6', '000000') },
-        { name: 'XL', image: ph('Club Tee\nCream', 'f3f4f6', '000000') }
-    ],
+    flavours: ['S', 'M', 'L', 'XL'],
     images: [
         ph('Club Tee\nCream', 'f3f4f6', '000000'),
         ph('Club Tee\nBack Print', 'f3f4f6', '000000'),
@@ -331,7 +326,7 @@ export const products: Product[] = [
     longDescription: "Low profile, unstructured 6-panel cap made from premium 8-wale corduroy. Features an embroidered 'H' logo on the front and adjustable brass slider at the back.\n\nOne size fits most.",
     price: 40.00,
     image: ph('Cap\nForest Green', '1d4f36'),
-    variants: [{ name: 'One Size', image: ph('Cap\nForest Green', '1d4f36') }],
+    flavours: ['One Size'],
     goals: ['Lifestyle'],
     benefitDetails: [
         { title: "Premium Fabric", description: "8-wale cotton corduroy.", icon: "leaf" },
@@ -349,10 +344,10 @@ export const products: Product[] = [
     longDescription: "The ultimate beach companion. Made from a microfiber blend that repels sand and dries 3x faster than standard cotton towels.\n\nFeaturing our custom 'Yarndi Camo' print in greens and creams.",
     price: 60.00,
     image: ph('Towel\nCamo Print', 'a3e635', '000000'),
-    variants: [{ name: 'One Size', image: ph('Towel\nCamo Print', 'a3e635', '000000') }],
+    flavours: ['One Size'],
     goals: ['Lifestyle'],
     benefitDetails: [
-        { title: "Sand Free", description: "Sand free.", icon: "shield" },
+        { title: "Sand Free", description: "Shake it off instantly.", icon: "shield" },
         { title: "Quick Dry", description: "Dries 3x faster than cotton.", icon: "zap" },
         { title: "Large Size", description: "160cm x 80cm.", icon: "leaf" }
     ],
@@ -537,6 +532,5 @@ export const challengesData: Challenge[] = [
     { id: 'c1', title: 'Follow us on Instagram', description: 'Join the community @hi.yarndi', points: 50, icon: 'instagram', actionLabel: 'Follow' },
     { id: 'c2', title: 'Run 5km', description: 'Log a 5km run on Strava and tag us.', points: 100, icon: 'run', actionLabel: 'Connect Strava' },
     { id: 'c3', title: 'Leave a Review', description: 'Review a product you have purchased.', points: 150, icon: 'review', actionLabel: 'Write Review' },
-    { id: 'c4', title: 'Refer a Friend', description: 'Give $10, Get $10 (and 200 points).', icon: 'referral', actionLabel: 'Share Link' }
+    { id: 'c4', title: 'Refer a Friend', description: 'Give $10, Get $10 (and 200 points).', points: 200, icon: 'referral', actionLabel: 'Share Link' }
 ];
-

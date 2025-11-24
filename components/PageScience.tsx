@@ -204,29 +204,29 @@ export const PageScience: React.FC = () => {
         {/* Main Content Area */}
         <div className="container mx-auto px-4 md:px-6 -mt-20 md:-mt-24 relative z-20 pb-24">
             
-            {/* Tabs */}
-            <div className="flex flex-wrap justify-center gap-2 md:gap-3 mb-8 md:mb-12 animate-fade-in-up delay-300">
+            {/* Tabs - Horizontal Scroll on Mobile */}
+            <div className="flex overflow-x-auto gap-3 pb-4 -mx-4 px-4 md:mx-0 md:justify-center md:flex-wrap no-scrollbar snap-x mb-6 md:mb-12 animate-fade-in-up delay-300">
                 <button 
                     onClick={() => setActiveTab('energize')}
-                    className={`px-4 py-3 md:px-6 md:py-4 rounded-xl md:rounded-2xl font-bold flex items-center gap-2 transition-all shadow-xl text-xs md:text-base ${activeTab === 'energize' ? 'bg-yellow-100 text-off-black ring-2 ring-yellow-400' : 'bg-white text-gray-400 hover:text-gray-600'}`}
+                    className={`snap-start flex-shrink-0 px-4 py-3 md:px-6 md:py-4 rounded-xl md:rounded-2xl font-bold flex items-center gap-2 transition-all shadow-xl text-xs md:text-base ${activeTab === 'energize' ? 'bg-yellow-100 text-off-black ring-2 ring-yellow-400' : 'bg-white text-gray-400 hover:text-gray-600'}`}
                 >
                     <Zap className="w-4 h-4 md:w-5 md:h-5" /> Energize^
                 </button>
                 <button 
                     onClick={() => setActiveTab('recovery_plus')}
-                    className={`px-4 py-3 md:px-6 md:py-4 rounded-xl md:rounded-2xl font-bold flex items-center gap-2 transition-all shadow-xl text-xs md:text-base ${activeTab === 'recovery_plus' ? 'bg-teal-100 text-off-black ring-2 ring-teal-400' : 'bg-white text-gray-400 hover:text-gray-600'}`}
+                    className={`snap-start flex-shrink-0 px-4 py-3 md:px-6 md:py-4 rounded-xl md:rounded-2xl font-bold flex items-center gap-2 transition-all shadow-xl text-xs md:text-base ${activeTab === 'recovery_plus' ? 'bg-teal-100 text-off-black ring-2 ring-teal-400' : 'bg-white text-gray-400 hover:text-gray-600'}`}
                 >
                     <Battery className="w-4 h-4 md:w-5 md:h-5" /> Recovery+
                 </button>
                 <button 
                     onClick={() => setActiveTab('gut')}
-                    className={`px-4 py-3 md:px-6 md:py-4 rounded-xl md:rounded-2xl font-bold flex items-center gap-2 transition-all shadow-xl text-xs md:text-base ${activeTab === 'gut' ? 'bg-blue-100 text-off-black ring-2 ring-blue-400' : 'bg-white text-gray-400 hover:text-gray-600'}`}
+                    className={`snap-start flex-shrink-0 px-4 py-3 md:px-6 md:py-4 rounded-xl md:rounded-2xl font-bold flex items-center gap-2 transition-all shadow-xl text-xs md:text-base ${activeTab === 'gut' ? 'bg-blue-100 text-off-black ring-2 ring-blue-400' : 'bg-white text-gray-400 hover:text-gray-600'}`}
                 >
                     <Activity className="w-4 h-4 md:w-5 md:h-5" /> Drip°
                 </button>
                 <button 
                     onClick={() => setActiveTab('fuel')}
-                    className={`px-4 py-3 md:px-6 md:py-4 rounded-xl md:rounded-2xl font-bold flex items-center gap-2 transition-all shadow-xl text-xs md:text-base ${activeTab === 'fuel' ? 'bg-orange-100 text-off-black ring-2 ring-orange-400' : 'bg-white text-gray-400 hover:text-gray-600'}`}
+                    className={`snap-start flex-shrink-0 px-4 py-3 md:px-6 md:py-4 rounded-xl md:rounded-2xl font-bold flex items-center gap-2 transition-all shadow-xl text-xs md:text-base ${activeTab === 'fuel' ? 'bg-orange-100 text-off-black ring-2 ring-orange-400' : 'bg-white text-gray-400 hover:text-gray-600'}`}
                 >
                     <Leaf className="w-4 h-4 md:w-5 md:h-5" /> Fuel*
                 </button>
