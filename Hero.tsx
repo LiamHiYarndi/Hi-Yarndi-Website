@@ -9,9 +9,6 @@ export const Hero: React.FC = () => {
   // 2. Copy the ID (the random characters between /d/ and /view)
   // 3. Paste it below
   
-  // Replace with your Mascot Image ID
-  conts MASCOT_URL = "/mascot.png;
-  return (
     <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden pt-10 pb-20 md:py-0">
       
       {/* Animated Mesh Gradient Background */}
