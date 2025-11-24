@@ -4,7 +4,7 @@ export const myProducts = [
     id: 'energize-watermelon',
     name: 'Watermelon',
     category: 'Energize^',
-    image: '/energize-watermelon.PNG',
+    image: '/energize-watermelon.png',
     price: '$45.00',
     description: 'Natural caffeine + B-Vitamins for sustained energy.'
   },
@@ -12,7 +12,7 @@ export const myProducts = [
     id: 'energize-lychee',
     name: 'Lychee',
     category: 'Energize^',
-    image: '/energize-lychee.PNG',
+    image: '/energize-lychee.png',
     price: '$45.00',
     description: 'Natural caffeine + B-Vitamins for sustained energy.'
   },
@@ -20,7 +20,7 @@ export const myProducts = [
     id: 'energize-pineapple',
     name: 'Pineapple',
     category: 'Energize^',
-    image: '/energize-pineapple.PNG',
+    image: '/energize-pineapple.png',
     price: '$45.00',
     description: 'Natural caffeine + B-Vitamins for sustained energy.'
   },
@@ -28,7 +28,7 @@ export const myProducts = [
     id: 'energize-mango',
     name: 'Mango',
     category: 'Energize^',
-    image: '/energize-mango.PNG',
+    image: '/energize-mango.png',
     price: '$45.00',
     description: 'Natural caffeine + B-Vitamins for sustained energy.'
   },
@@ -38,7 +38,7 @@ export const myProducts = [
     id: 'recovery-watermelon',
     name: 'Watermelon',
     category: 'Recovery+',
-    image: '/recovery-watermelon.PNG',
+    image: '/recovery-watermelon.png',
     price: '$55.00',
     description: 'Plant-based protein + Magnesium for muscle repair.'
   },
@@ -46,7 +46,7 @@ export const myProducts = [
     id: 'recovery-blue-raspberry',
     name: 'Blue Raspberry',
     category: 'Recovery+',
-    image: '/recovery-blue-raspberry.PNG',
+    image: '/recovery-blue-raspberry.png',
     price: '$55.00',
     description: 'Plant-based protein + Magnesium for muscle repair.'
   },
@@ -54,7 +54,7 @@ export const myProducts = [
     id: 'recovery-strawberry-kiwi',
     name: 'Strawberry Kiwi',
     category: 'Recovery+',
-    image: '/recovery-strawberry-kiwi.PNG',
+    image: '/recovery-strawberry-kiwi.pnng',
     price: '$55.00',
     description: 'Plant-based protein + Magnesium for muscle repair.'
   },
@@ -62,7 +62,7 @@ export const myProducts = [
     id: 'recovery-lemonade',
     name: 'Lemonade',
     category: 'Recovery+',
-    image: '/recovery-lemonade.PNG',
+    image: '/recovery-lemonade.png',
     price: '$55.00',
     description: 'Plant-based protein + Magnesium for muscle repair.'
   },
@@ -72,7 +72,7 @@ export const myProducts = [
     id: 'drip-lychee',
     name: 'Lychee',
     category: 'Drip°',
-    image: '/drip-lychee.PNG',
+    image: '/drip-lychee.png',
     price: '$40.00',
     description: 'Hyper-hydration electrolytes with Kakadu Plum.'
   },
@@ -80,7 +80,7 @@ export const myProducts = [
     id: 'drip-kakadu-plum',
     name: 'Kakadu Plum',
     category: 'Drip°',
-    image: '/drip-kakadu-plum.PNG',
+    image: '/drip-kakadu-plum.png',
     price: '$40.00',
     description: 'Hyper-hydration electrolytes with Kakadu Plum.'
   },
@@ -88,7 +88,7 @@ export const myProducts = [
     id: 'drip-passionfruit',
     name: 'Passionfruit',
     category: 'Drip°',
-    image: '/drip-passionfruit.PNG',
+    image: '/drip-passionfruit.png',
     price: '$40.00',
     description: 'Hyper-hydration electrolytes with Kakadu Plum.'
   },
@@ -96,7 +96,7 @@ export const myProducts = [
     id: 'drip-guava',
     name: 'Guava',
     category: 'Drip°',
-    image: '/drip-guava.PNG',
+    image: '/drip-guava.png',
     price: '$40.00',
     description: 'Hyper-hydration electrolytes with Kakadu Plum.'
   }
