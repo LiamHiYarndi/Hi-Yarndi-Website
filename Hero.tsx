@@ -10,7 +10,7 @@ export const Hero: React.FC = () => {
   // 3. Paste it below
   
   // Replace with your Mascot Image ID
-  cont MASCOT_URL = "/mascot.png;
+  conts MASCOT_URL = "/mascot.png;
   return (
     <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden pt-10 pb-20 md:py-0">
       
