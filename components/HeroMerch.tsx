@@ -29,7 +29,7 @@ export const HeroMerch: React.FC<HeroMerchProps> = ({ onShopNow }) => {
             <span className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-white">Season 02 Drop</span>
           </div>
           
-          <h1 className="text-5xl sm:text-6xl md:text-8xl font-black tracking-tighter text-white leading-[0.9]">
+          <h1 className="font-tropiland text-5xl sm:text-6xl md:text-8xl tracking-tighter text-white leading-[0.9]">
             WEAR THE <br/>
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-200 to-gray-600">PLANT.</span>
           </h1>

@@ -1,51 +1,81 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Product, Currency } from '../types';
+import { Product, Currency, PageView } from '../types';
 import { Button } from './Button';
 import ReactMarkdown from 'react-markdown';
-import { formatPrice } from '../data';
-import { ArrowLeft, Check, ChevronDown, ChevronUp, Star, ShieldCheck, Leaf, Zap, Droplets, Brain, Dumbbell, Moon, Flame, FlaskConical, Shirt, Scissors, Sun, Share2, Microscope } from 'lucide-react';
+import { formatPrice, products } from '../data';
+import { ArrowLeft, Star, Share2, ChevronDown, ChevronUp, Sparkles, Check, Shirt, Flame, Activity } from 'lucide-react';
 import { ComparisonSection } from './ComparisonSection';
 import { ProductReviews } from './ProductReviews';
+import { Leaf, Zap, ShieldCheck, Droplets, Brain, Dumbbell, Moon, FlaskConical, Scissors, Sun, Microscope } from 'lucide-react';
+
 
 interface Props {
   product: Product;
   onBack: () => void;
   onAddToCart: (product: Product, quantity: number, bundleQty: number, flavour: string, price: number) => void;
+  onProductSelect: (product: Product) => void;
+  onNavigate: (page: PageView) => void;
   currency: Currency;
 }
 
-export const PageProduct: React.FC<Props> = ({ product, onBack, onAddToCart, currency }) => {
-  const [selectedBundle, setSelectedBundle] = useState(1);
-  const [selectedFlavour, setSelectedFlavour] = useState(product.flavours?.[0] || '');
-  const [openSection, setOpenSection] = useState<string | null>('benefits'); 
+export const PageProduct: React.FC<Props> = ({ product, onBack, onAddToCart, onProductSelect, onNavigate, currency }) => {
+  const [selectedBundle, setSelectedBundle] = useState(product.bundles ? product.bundles[0].quantity : 1);
+  const [openSection, setOpenSection] = useState<string | null>('details'); 
   const [showStickyBar, setShowStickyBar] = useState(false);
   const [showShareToast, setShowShareToast] = useState(false);
   
   const mainCtaRef = useRef<HTMLDivElement>(null);
   const isMerch = product.range === 'Merch';
 
-  // Images
   const [activeImage, setActiveImage] = useState(product.image);
+  const [selectedOption, setSelectedOption] = useState(
+      product.variants?.[0]?.name || product.flavours?.[0] || ''
+  );
+
+  const [bundleSelections, setBundleSelections] = useState<Record<string, string>>({});
+
   useEffect(() => {
     setActiveImage(product.image);
-    setSelectedFlavour(product.flavours?.[0] || '');
-    setSelectedBundle(1);
+    setSelectedOption(product.variants?.[0]?.name || product.flavours?.[0] || '');
+    setSelectedBundle(product.bundles ? product.bundles[0].quantity : 1);
+    
+    if (product.bundleComponents) {
+        const initialSelections: Record<string, string> = {};
+        product.bundleComponents.forEach(component => {
+            initialSelections[component.name] = component.options[0];
+        });
+        setBundleSelections(initialSelections);
+    } else {
+        setBundleSelections({});
+    }
+
   }, [product]);
 
-  // Auto-switch image when flavour changes
   useEffect(() => {
-    if (product.flavourImages && selectedFlavour && product.flavourImages[selectedFlavour]) {
-      setActiveImage(product.flavourImages[selectedFlavour]);
+    if (!product.bundleComponents) {
+        if (product.variants) {
+            const variant = product.variants.find(v => v.name === selectedOption);
+            if (variant) setActiveImage(variant.image);
+        } else if (product.flavourImages && selectedOption && product.flavourImages[selectedOption]) {
+            setActiveImage(product.flavourImages[selectedOption]);
+        }
     }
-  }, [selectedFlavour, product.flavourImages]);
+  }, [selectedOption, product]);
 
   const galleryImages = product.images && product.images.length > 0 ? product.images : [product.image];
+
+  const upsellBundles = products.filter(p => 
+    p.range === 'Bundles' && 
+    p.id !== product.id &&
+    (p.longDescription?.includes(product.title) || p.description.includes(product.title) || p.title.includes("Starter"))
+  ).slice(0, 3);
+
+  const displayBundles = upsellBundles.length > 0 ? upsellBundles : products.filter(p => p.range === 'Bundles').slice(0, 3);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        // Show bar when main CTA is NOT intersecting (scrolled past)
         setShowStickyBar(!entry.isIntersecting);
       },
       { threshold: 0 }
@@ -67,15 +97,30 @@ export const PageProduct: React.FC<Props> = ({ product, onBack, onAddToCart, cur
   const getPrice = () => {
       const bundle = product.bundles?.find(b => b.quantity === selectedBundle);
       if(bundle) {
-          return product.price * bundle.quantity * (1 - bundle.discount / 100);
+          if (bundle.fixedPrice) return bundle.fixedPrice;
+          if (bundle.discount) return product.price * bundle.quantity * (1 - bundle.discount / 100);
+          return product.price * bundle.quantity;
       }
-      return product.price * selectedBundle;
+      return product.price * (selectedBundle || 1);
   };
 
   const currentPrice = getPrice();
 
+  const handleBundleSelectionChange = (componentName: string, value: string) => {
+      setBundleSelections(prev => ({
+          ...prev,
+          [componentName]: value
+      }));
+  };
+
   const handleAdd = () => {
-      onAddToCart(product, 1, selectedBundle, selectedFlavour, currentPrice);
+      let finalFlavorString = selectedOption;
+      if (product.bundleComponents) {
+          finalFlavorString = Object.entries(bundleSelections)
+            .map(([key, value]) => `${key}: ${value}`)
+            .join(' | ');
+      }
+      onAddToCart(product, 1, selectedBundle, finalFlavorString, currentPrice);
   }
 
   const handleShare = async () => {
@@ -118,18 +163,19 @@ export const PageProduct: React.FC<Props> = ({ product, onBack, onAddToCart, cur
 
   return (
     <div className="bg-theme-bg min-h-screen pb-24 md:pb-40 animate-fade-in relative">
-        {/* Share Toast */}
         <div className={`fixed top-24 left-1/2 -translate-x-1/2 z-[80] bg-off-black text-white px-4 py-2 rounded-full text-xs font-bold transition-all duration-300 ${showShareToast ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'}`}>
             Link Copied to Clipboard!
         </div>
 
-        {/* Desktop Sticky Bar (Top) */}
+        {/* Desktop Sticky Bar */}
         <div className={`fixed top-0 left-0 right-0 bg-theme-card/95 backdrop-blur border-b border-theme-border z-40 py-3 px-6 hidden lg:flex items-center justify-between shadow-md transition-transform duration-300 ${showStickyBar ? 'translate-y-[80px]' : '-translate-y-full'}`}>
             <div className="flex items-center gap-4">
                 <img src={product.image} alt={product.title} className="w-12 h-12 rounded-lg object-cover bg-theme-bg" />
                 <div>
                     <h4 className="font-bold text-theme-text text-sm">{product.title}</h4>
-                    <p className="text-xs text-theme-sub font-medium">{selectedFlavour}</p>
+                    <p className="text-xs text-theme-sub font-medium">
+                        {product.bundleComponents ? "Custom Bundle" : selectedOption}
+                    </p>
                 </div>
             </div>
             <div className="flex items-center gap-6">
@@ -140,14 +186,14 @@ export const PageProduct: React.FC<Props> = ({ product, onBack, onAddToCart, cur
             </div>
         </div>
 
-        {/* Mobile Sticky Header - Only shows if scrolling up ideally, but simplified here */}
+        {/* Mobile Sticky Header */}
         <div className="sticky top-[70px] z-20 bg-theme-card/95 backdrop-blur border-b border-theme-border px-4 py-3 flex items-center gap-3 lg:hidden animate-fade-in-up text-theme-text shadow-sm safe-top">
             <button onClick={onBack} className="p-1 -ml-1 active:scale-95"><ArrowLeft className="w-5 h-5" /></button>
             <span className="font-bold text-sm truncate flex-1">{product.title}</span>
             <button onClick={handleShare} className="ml-auto p-1 active:scale-95"><Share2 className="w-5 h-5 text-theme-text" /></button>
         </div>
 
-        <div className="container mx-auto px-4 md:px-6 py-6 md:py-16">
+        <div className="container mx-auto px-4 md:px-6 py-4 md:py-16">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 xl:gap-20">
                 
                 {/* Left: Gallery */}
@@ -159,15 +205,20 @@ export const PageProduct: React.FC<Props> = ({ product, onBack, onAddToCart, cur
                                 {product.tag}
                             </span>
                         )}
+                        {product.comingSoon && (
+                            <span className="absolute top-4 right-4 md:top-6 md:right-4 px-3 py-1 md:px-4 md:py-2 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider bg-off-black text-white shadow-md animate-pulse">
+                                Coming Soon
+                            </span>
+                        )}
                     </div>
-                    {/* Thumbnails - Improved Mobile Scroll */}
+                    {/* Thumbnails */}
                     {galleryImages.length > 1 && (
                         <div className="flex gap-3 overflow-x-auto pb-4 no-scrollbar lg:grid lg:grid-cols-4 lg:gap-4 snap-x px-1 -mx-4 md:mx-0 pl-4 md:pl-0">
                             {galleryImages.map((img, idx) => (
                                 <div 
                                     key={idx} 
                                     onClick={() => setActiveImage(img)}
-                                    className={`snap-start flex-shrink-0 w-20 h-20 md:w-auto md:h-auto aspect-square bg-theme-bg rounded-xl cursor-pointer hover:opacity-80 transition-opacity border-2 ${activeImage === img ? 'border-theme-text' : 'border-transparent'}`}
+                                    className={`snap-start flex-shrink-0 w-16 h-16 md:w-20 md:h-20 aspect-square bg-theme-bg rounded-xl cursor-pointer hover:opacity-80 transition-opacity border-2 ${activeImage === img ? 'border-theme-text' : 'border-transparent'}`}
                                 >
                                     <img src={img} className="w-full h-full object-cover rounded-lg" />
                                 </div>
@@ -183,7 +234,7 @@ export const PageProduct: React.FC<Props> = ({ product, onBack, onAddToCart, cur
                             <div className="flex text-accent text-xs">
                                 {[1,2,3,4,5].map(i => <Star key={i} className="w-3 h-3 fill-current" />)}
                             </div>
-                            <span className="text-xs text-gray-400 font-medium">4.9 (120 Reviews)</span>
+                            <span className="text-xs text-gray-400 font-medium">4.9 (120)</span>
                         </div>
                         {isMerch ? (
                              <div className="flex items-center gap-1 text-theme-text text-[10px] font-bold uppercase tracking-widest">
@@ -196,16 +247,16 @@ export const PageProduct: React.FC<Props> = ({ product, onBack, onAddToCart, cur
                         )}
                     </div>
 
-                    <h1 className="font-heading text-3xl md:text-5xl font-black text-theme-text mb-4 leading-tight">
+                    <h1 className="font-heading text-3xl md:text-5xl font-black text-theme-text mb-2 md:mb-4 leading-tight uppercase">
                         {product.title}
                     </h1>
                     
-                    <div className="flex items-baseline gap-3 mb-6">
-                        <div className="text-3xl font-bold text-theme-text">
+                    <div className="flex items-baseline gap-3 mb-4 md:mb-6">
+                        <div className="text-2xl md:text-3xl font-bold text-theme-text">
                             {formatPrice(currentPrice, currency)}
                         </div>
-                        {product.compareAtPrice && selectedBundle === 1 && (
-                            <div className="text-xl text-gray-400 line-through decoration-red-500 decoration-2">
+                        {product.compareAtPrice && selectedBundle === (product.bundles ? product.bundles[0].quantity : 1) && (
+                            <div className="text-lg md:text-xl text-gray-400 line-through decoration-red-500 decoration-2">
                                 {formatPrice(product.compareAtPrice, currency)}
                             </div>
                         )}
@@ -214,23 +265,24 @@ export const PageProduct: React.FC<Props> = ({ product, onBack, onAddToCart, cur
                     {/* === PRIMARY ACTION AREA === */}
                     <div ref={mainCtaRef} className="space-y-6 mb-8 p-1">
                         
-                        {/* 1. Flavour/Size Selection */}
-                        {product.flavours && (
+                        {!product.bundleComponents && (product.variants || product.flavours) && (
                             <div>
-                                <label className="block text-xs font-bold uppercase text-gray-400 mb-3">
+                                <label className="block text-xs font-bold uppercase text-gray-400 mb-2">
                                     {isMerch ? 'Select Size' : 'Select Flavour'}
                                 </label>
-                                <div className="flex flex-wrap gap-2">
-                                    {product.flavours.map(f => (
+                                {/* Horizontal Scroll for Options */}
+                                <div className="flex flex-nowrap md:flex-wrap gap-2 overflow-x-auto no-scrollbar pb-2 md:pb-0">
+                                    {(product.variants?.map(v => v.name) || product.flavours || []).map(f => (
                                         <button
                                             key={f}
-                                            onClick={() => setSelectedFlavour(f)}
+                                            onClick={() => setSelectedOption(f)}
                                             className={`
-                                                ${isMerch ? 'min-w-[3rem] h-12 px-3' : 'px-4 py-3'}
-                                                rounded-xl text-sm font-bold border-2 transition-all duration-200 
-                                                ${selectedFlavour === f 
-                                                    ? 'border-theme-text bg-theme-text text-theme-card scale-105 shadow-md' 
-                                                    : 'border-theme-border text-theme-sub hover:border-gray-300 hover:scale-105'
+                                                shrink-0 whitespace-nowrap
+                                                ${isMerch ? 'min-w-[3rem] h-10 px-3' : 'px-4 py-2'}
+                                                rounded-xl text-xs font-bold border-2 transition-all duration-200 
+                                                ${selectedOption === f 
+                                                    ? 'border-theme-text bg-theme-text text-theme-card shadow-md' 
+                                                    : 'border-theme-border text-theme-sub hover:border-gray-300'
                                                 }`}
                                         >
                                             {f}
@@ -240,46 +292,135 @@ export const PageProduct: React.FC<Props> = ({ product, onBack, onAddToCart, cur
                             </div>
                         )}
 
-                        {/* 2. Bundle/Save Options (Secondary) */}
-                        {product.bundles && !isMerch && (
-                            <div className="p-4 bg-theme-bg rounded-2xl border border-theme-border">
-                                <label className="block text-xs font-bold uppercase text-gray-500 mb-3">Buy More, Save More</label>
+                        {product.bundleComponents && (
+                            <div className="space-y-4 bg-theme-bg p-4 rounded-2xl border border-theme-border">
+                                {product.bundleComponents.map((component, idx) => (
+                                    <div key={idx}>
+                                        <label className="block text-xs font-bold uppercase text-gray-500 mb-2">{component.name}</label>
+                                        {/* Horizontal Scroll for Bundle Components */}
+                                        <div className="flex flex-nowrap md:flex-wrap gap-2 overflow-x-auto no-scrollbar pb-2 md:pb-0">
+                                            {component.options.map(option => (
+                                                <button
+                                                    key={option}
+                                                    onClick={() => handleBundleSelectionChange(component.name, option)}
+                                                    className={`
+                                                        shrink-0 whitespace-nowrap
+                                                        px-4 py-2 rounded-lg text-xs font-bold border transition-all duration-200
+                                                        ${bundleSelections[component.name] === option
+                                                            ? 'border-theme-text bg-theme-text text-theme-card shadow-sm' 
+                                                            : 'border-theme-border bg-theme-card text-theme-sub hover:border-gray-300'
+                                                        }
+                                                    `}
+                                                >
+                                                    {option}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+
+                        {product.bundles && !isMerch && !product.range.includes('Bundles') && (
+                            <div className="p-3 bg-theme-bg rounded-2xl border border-theme-border">
+                                <label className="block text-xs font-bold uppercase text-gray-500 mb-2">Buy More, Save More</label>
                                 <div className="space-y-2">
-                                    {product.bundles.map(bundle => (
-                                        <div 
-                                            key={bundle.quantity}
-                                            onClick={() => setSelectedBundle(bundle.quantity)}
-                                            className={`relative p-3 rounded-xl border-2 cursor-pointer flex justify-between items-center transition-all bg-theme-card hover:shadow-md ${
-                                                selectedBundle === bundle.quantity
-                                                ? 'border-yarndi-green shadow-sm ring-1 ring-yarndi-green scale-[1.02]' 
-                                                : 'border-theme-border hover:border-gray-300'
-                                            }`}
-                                        >
-                                            {bundle.saveText && (
-                                                <div className="absolute -top-2.5 right-4 bg-theme-text text-theme-card text-[9px] font-bold px-2 py-0.5 rounded uppercase animate-bounce" style={{animationDuration: '3s'}}>
-                                                    {bundle.saveText}
+                                    {product.bundles.map(bundle => {
+                                        let price = 0;
+                                        if (bundle.fixedPrice) {
+                                            price = bundle.fixedPrice;
+                                        } else if (bundle.discount) {
+                                            price = product.price * bundle.quantity * (1 - bundle.discount/100);
+                                        } else {
+                                            price = product.price * bundle.quantity;
+                                        }
+                                        
+                                        return (
+                                            <div 
+                                                key={bundle.quantity}
+                                                onClick={() => setSelectedBundle(bundle.quantity)}
+                                                className={`relative p-3 rounded-xl border-2 cursor-pointer flex justify-between items-center transition-all bg-theme-card ${
+                                                    selectedBundle === bundle.quantity
+                                                    ? 'border-yarndi-green shadow-sm ring-1 ring-yarndi-green' 
+                                                    : 'border-theme-border'
+                                                }`}
+                                            >
+                                                {bundle.saveText && (
+                                                    <div className="absolute -top-2 right-2 bg-theme-text text-theme-card text-[9px] font-bold px-2 py-0.5 rounded uppercase">
+                                                        {bundle.saveText}
+                                                    </div>
+                                                )}
+                                                <div className="flex items-center gap-2">
+                                                    <div className={`w-4 h-4 rounded-full border flex items-center justify-center transition-colors ${selectedBundle === bundle.quantity ? 'border-theme-text bg-theme-text' : 'border-gray-300'}`}>
+                                                        {selectedBundle === bundle.quantity && <div className="w-1.5 h-1.5 bg-theme-card rounded-full" />}
+                                                    </div>
+                                                    <span className="font-bold text-theme-text text-xs">{bundle.label}</span>
                                                 </div>
-                                            )}
-                                            <div className="flex items-center gap-3">
-                                                <div className={`w-5 h-5 rounded-full border flex items-center justify-center transition-colors ${selectedBundle === bundle.quantity ? 'border-theme-text bg-theme-text' : 'border-gray-300'}`}>
-                                                    {selectedBundle === bundle.quantity && <div className="w-2 h-2 bg-theme-card rounded-full" />}
-                                                </div>
-                                                <span className="font-bold text-theme-text text-sm">{bundle.label}</span>
+                                                <span className="font-bold text-xs text-theme-text">{formatPrice(price, currency)}</span>
                                             </div>
-                                            <span className="font-bold text-sm text-theme-text">{formatPrice(product.price * bundle.quantity * (1 - bundle.discount/100), currency)}</span>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        )}
+
+                        <Button fullWidth size="lg" onClick={handleAdd} className="text-base py-3 shadow-xl shadow-green-900/10 rounded-2xl h-12 md:h-14 hover:scale-[1.02] active:scale-95 transition-transform">
+                            Add to Bag &mdash; {formatPrice(currentPrice, currency)}
+                        </Button>
+                        <p className="text-center text-[10px] text-gray-400 font-bold uppercase tracking-widest">
+                            {product.comingSoon ? "Pre-Launch Registration" : "In Stock - Ships Fast"}
+                        </p>
+
+                        {!isMerch && product.range !== 'Bundles' && displayBundles.length > 0 && (
+                            <div className="mt-6 pt-6 border-t border-theme-border animate-fade-in-up">
+                                <h4 className="font-heading font-bold text-sm uppercase mb-3 text-theme-text flex items-center gap-2">
+                                    <Sparkles className="w-4 h-4 text-accent fill-accent" /> Upgrade Your Stack
+                                </h4>
+                                <div className="space-y-3">
+                                    {displayBundles.map(bundle => (
+                                        <div 
+                                            key={bundle.id} 
+                                            onClick={() => onProductSelect(bundle)}
+                                            className="flex gap-3 bg-theme-bg p-3 rounded-xl border border-theme-border hover:border-accent hover:shadow-md cursor-pointer group transition-all"
+                                        >
+                                            <div className="w-14 h-14 bg-white rounded-lg overflow-hidden shrink-0 border border-theme-border">
+                                                <img src={bundle.image} alt={bundle.title} className="w-full h-full object-cover" />
+                                            </div>
+                                            <div className="flex-1">
+                                                <div className="flex justify-between items-start">
+                                                    <h5 className="font-bold text-xs md:text-sm text-theme-text group-hover:text-accent transition-colors">{bundle.title}</h5>
+                                                    <span className="font-bold text-xs md:text-sm text-theme-text">{formatPrice(bundle.price, currency)}</span>
+                                                </div>
+                                                <p className="text-[10px] text-theme-sub line-clamp-1 mb-1">{bundle.subtitle}</p>
+                                                {bundle.compareAtPrice && (
+                                                    <span className="text-[10px] font-bold uppercase tracking-wider text-white bg-off-black px-2 py-0.5 rounded">
+                                                        Save {formatPrice(bundle.compareAtPrice - bundle.price, currency)}
+                                                    </span>
+                                                )}
+                                            </div>
                                         </div>
                                     ))}
                                 </div>
                             </div>
                         )}
 
-                        {/* 3. ADD TO CART BUTTON (Primary) */}
-                        <Button fullWidth size="lg" onClick={handleAdd} className="text-lg py-4 shadow-xl shadow-green-900/10 rounded-2xl h-14 hover:scale-[1.02] active:scale-95 transition-transform">
-                            Add to Bag &mdash; {formatPrice(currentPrice, currency)}
-                        </Button>
+                        {/* NEW: Perfect Match Banner */}
+                        {!isMerch && (
+                            <div className="mt-8 bg-theme-card/50 rounded-2xl p-6 border border-theme-border text-center shadow-sm hover:shadow-md transition-all group cursor-pointer" onClick={() => onNavigate('athletes')}>
+                                <div className="w-10 h-10 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
+                                    <Activity className="w-5 h-5 text-accent" />
+                                </div>
+                                <h4 className="font-heading font-bold text-lg mb-2 text-theme-text uppercase tracking-wide">Unsure?</h4>
+                                <p className="text-sm text-theme-sub mb-4 leading-relaxed">
+                                    Use our biometric stack builder to find the perfect protocol for your body type.
+                                </p>
+                                <span className="text-xs font-bold uppercase tracking-widest text-accent border-b-2 border-accent pb-1">
+                                    Find Your Match
+                                </span>
+                            </div>
+                        )}
                     </div>
 
-                    {/* Description */}
                     <div className="text-theme-sub mb-8 leading-relaxed text-sm md:text-base border-l-2 border-accent pl-4">
                         <ReactMarkdown components={{
                             p: ({node, ...props}) => <p className="mb-4 last:mb-0" {...props} />,
@@ -289,9 +430,7 @@ export const PageProduct: React.FC<Props> = ({ product, onBack, onAddToCart, cur
                         </ReactMarkdown>
                     </div>
 
-                    {/* Accordion Sections */}
                     <div className="border-t border-theme-border pt-2 space-y-2">
-                        {/* Key Benefits */}
                         <div className="border-b border-theme-border pb-2">
                             <button onClick={() => toggleSection('benefits')} className="flex justify-between items-center w-full py-4 text-left font-bold text-theme-text text-sm uppercase tracking-wider">
                                 <span>{isMerch ? 'Product Features' : 'Key Benefits'}</span>
@@ -307,42 +446,43 @@ export const PageProduct: React.FC<Props> = ({ product, onBack, onAddToCart, cur
                                                 <p className="text-xs text-theme-sub leading-relaxed">{benefit.description}</p>
                                             </div>
                                         </div>
-                                    )) : <p className="text-sm text-gray-500">Details coming soon.</p>}
+                                    )) : (
+                                        <div className="space-y-2">
+                                            {product.benefits?.map((b, i) => (
+                                                <div key={i} className="flex items-center gap-2">
+                                                    <Check className="w-4 h-4 text-accent" />
+                                                    <span className="text-sm text-theme-sub">{b}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
                                 </div>
                             )}
                         </div>
 
-                        {/* Ingredients & Nutrition */}
                         <div className="border-b border-theme-border pb-2">
                             <button onClick={() => toggleSection('ingredients')} className="flex justify-between items-center w-full py-4 text-left font-bold text-theme-text text-sm uppercase tracking-wider">
                                 <span>{isMerch ? 'Materials & Care' : 'Ingredients & Nutrition'}</span>
                                 {openSection === 'ingredients' ? <ChevronUp className="w-4 h-4 transition-transform rotate-180" /> : <ChevronDown className="w-4 h-4 transition-transform" />}
                             </button>
                             {openSection === 'ingredients' && (
-                                <div className="pb-4 text-sm text-theme-sub space-y-4 animate-fade-in-up">
-                                    {product.ingredientsList && (
-                                        <p className="leading-relaxed bg-theme-bg p-4 rounded-xl font-medium text-xs">
-                                            {isMerch ? <span className="font-bold block mb-1">Composition:</span> : null}
-                                            {product.ingredientsList}
-                                        </p>
-                                    )}
-                                    
-                                    {!isMerch && product.nutrition && (
-                                        <div className="overflow-x-auto border border-theme-border rounded-lg">
-                                            <table className="w-full text-xs text-left min-w-[300px]">
-                                                <thead className="bg-theme-bg">
+                                <div className="pb-4 text-sm text-theme-sub space-y-6 animate-fade-in-up">
+                                    {product.nutrition && product.nutrition.length > 0 && (
+                                        <div className="border border-theme-border rounded-xl overflow-hidden shadow-sm">
+                                            <table className="w-full text-xs text-left">
+                                                <thead className="bg-theme-card border-b border-theme-border font-bold text-theme-text uppercase tracking-wider">
                                                     <tr>
-                                                        <th className="py-2 px-3 font-bold text-theme-text">Nutrient</th>
-                                                        <th className="py-2 px-3 font-bold text-theme-text">Per Serve</th>
-                                                        <th className="py-2 px-3 font-bold text-theme-text">Per 100g/ml</th>
+                                                        <th className="p-3 w-1/3">Nutrient</th>
+                                                        <th className="p-3 w-1/3">Per Serve</th>
+                                                        <th className="p-3 w-1/3">Per 100{product.format?.includes('ml') ? 'ml' : 'g'}</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody className="divide-y divide-theme-border">
+                                                <tbody className="divide-y divide-theme-border bg-theme-bg">
                                                     {product.nutrition.map((row, i) => (
-                                                        <tr key={i}>
-                                                            <td className="py-2 px-3 font-medium text-theme-text">{row.nutrient}</td>
-                                                            <td className="py-2 px-3">{row.perServe}</td>
-                                                            <td className="py-2 px-3">{row.per100}</td>
+                                                        <tr key={i} className="hover:bg-theme-card/50 transition-colors">
+                                                            <td className="p-3 font-medium text-theme-text">{row.nutrient}</td>
+                                                            <td className="p-3">{row.perServe}</td>
+                                                            <td className="p-3 text-theme-sub">{row.per100}</td>
                                                         </tr>
                                                     ))}
                                                 </tbody>
@@ -350,43 +490,15 @@ export const PageProduct: React.FC<Props> = ({ product, onBack, onAddToCart, cur
                                         </div>
                                     )}
 
-                                    {isMerch && product.usage && (
-                                        <div className="grid grid-cols-2 gap-3">
-                                            <div className="bg-theme-bg p-3 rounded-xl">
-                                                <span className="text-[10px] font-bold uppercase text-gray-400 block">Wash</span>
-                                                <span className="text-xs font-bold text-theme-text">{product.usage.how}</span>
-                                            </div>
-                                            <div className="bg-theme-bg p-3 rounded-xl">
-                                                 <span className="text-[10px] font-bold uppercase text-gray-400 block">Fit Tip</span>
-                                                <span className="text-xs font-bold text-theme-text">{product.usage.proTip}</span>
-                                            </div>
+                                    {product.ingredientsList && (
+                                        <div className="leading-relaxed bg-theme-bg p-4 rounded-xl font-medium text-xs border border-theme-border">
+                                            {isMerch ? <span className="font-bold block mb-1 text-theme-text uppercase tracking-wider">Composition:</span> : <span className="font-bold block mb-1 text-theme-text uppercase tracking-wider">Ingredients:</span>}
+                                            {product.ingredientsList}
                                         </div>
                                     )}
                                 </div>
                             )}
                         </div>
-
-                        {/* Usage */}
-                        {!isMerch && product.usage && (
-                            <div className="border-b border-theme-border pb-2">
-                                <button onClick={() => toggleSection('usage')} className="flex justify-between items-center w-full py-4 text-left font-bold text-theme-text text-sm uppercase tracking-wider">
-                                    <span>How to Use</span>
-                                    {openSection === 'usage' ? <ChevronUp className="w-4 h-4 transition-transform rotate-180" /> : <ChevronDown className="w-4 h-4 transition-transform" />}
-                                </button>
-                                {openSection === 'usage' && (
-                                    <div className="pb-4 grid grid-cols-1 gap-3 animate-fade-in-up">
-                                        <div className="bg-blue-50/50 p-4 rounded-xl border border-blue-100">
-                                            <span className="text-[10px] font-bold uppercase text-blue-600 block mb-1">When</span>
-                                            <p className="font-bold text-sm text-theme-text">{product.usage.when}</p>
-                                        </div>
-                                        <div className="bg-teal-50/50 p-4 rounded-xl border border-teal-100">
-                                            <span className="text-[10px] font-bold uppercase text-teal-600 block mb-1">How</span>
-                                            <p className="font-bold text-sm text-theme-text">{product.usage.how}</p>
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-                        )}
                     </div>
                 </div>
             </div>
@@ -402,7 +514,11 @@ export const PageProduct: React.FC<Props> = ({ product, onBack, onAddToCart, cur
             <div className="flex items-center gap-4 mb-3">
                 <div className="flex-1">
                     <p className="text-xs font-bold text-theme-text truncate">{product.title}</p>
-                    <p className="text-[10px] text-gray-500">{selectedFlavour}</p>
+                    <p className="text-[10px] text-gray-500">
+                        {product.bundleComponents 
+                            ? "Custom Bundle" 
+                            : selectedOption}
+                    </p>
                 </div>
                 <div className="font-bold text-lg text-theme-text">{formatPrice(currentPrice, currency)}</div>
             </div>

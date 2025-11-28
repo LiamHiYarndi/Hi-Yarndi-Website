@@ -1,8 +1,8 @@
 
 
-export type PageView = 'home' | 'shop' | 'product' | 'ranges' | 'about' | 'science' | 'athletes' | 'blog' | 'contact' | 'cart' | 'comparison' | 'hoodies' | 'tees' | 'headwear' | 'accessories' | 'account';
+export type PageView = 'home' | 'shop' | 'product' | 'ranges' | 'about' | 'science' | 'athletes' | 'blog' | 'contact' | 'cart' | 'comparison' | 'hoodies' | 'tees' | 'headwear' | 'accessories' | 'account' | 'admin' | 'wholesale' | 'legal';
 
-export type RangeType = 'Recovery+' | 'Energize^' | 'Drip°' | 'Fuel*' | 'Merch';
+export type RangeType = 'Recovery+' | 'Energize^' | 'Drip°' | 'Fuel*' | 'Merch' | 'Bundles';
 
 export type SiteMode = 'performance' | 'merch';
 
@@ -17,6 +17,7 @@ export interface CartItem {
     quantity: number; // number of units (e.g. 1 bundle)
     bundleSize: number; // items per bundle
     price: number; // price per unit in base currency (AUD)
+    isWholesale?: boolean;
 }
 
 export interface NutritionItem {
@@ -28,7 +29,8 @@ export interface NutritionItem {
 export interface BundleOption {
   quantity: number;
   label: string;
-  discount: number; // percentage
+  discount?: number; // percentage
+  fixedPrice?: number; // Override calculated price
   saveText?: string;
 }
 
@@ -44,6 +46,16 @@ export interface ScienceDetail {
     icon?: string;
 }
 
+export interface Variant {
+    name: string;
+    image: string;
+}
+
+export interface BundleComponent {
+    name: string; // e.g. "Select Hoodie Size" or "Recovery+ Flavor"
+    options: string[]; // e.g. ["S", "M", "L"] or ["Watermelon", "Berry"]
+}
+
 export interface Product {
   id: string;
   range: RangeType;
@@ -56,12 +68,30 @@ export interface Product {
   pricePerUnit?: string; 
   image: string;
   images?: string[];
+  comingSoon?: boolean; // New flag for pre-launch
+  
+  // Wholesale Specifics
+  wholesalePrice?: number;
+  wholesaleMoq?: number; // Minimum units (e.g. case size)
+  caseLabel?: string; // e.g. "Case of 12"
+
+  // New Variant System
+  variants?: Variant[];
+  
+  // Multi-select for Bundles
+  bundleComponents?: BundleComponent[];
+
+  // Legacy fields (kept for compatibility if needed, but variants preferred)
   flavourImages?: Record<string, string>;
+  flavours?: string[]; 
+  
   tag?: string;
   tagColor?: string;
   format?: string; 
-  flavours?: string[]; // Used for Sizes in Merch
   
+  // Merch Categorization
+  merchCategory?: 'Lifestyle' | 'Performance' | 'Gear';
+
   // Details
   ingredientsList?: string; // Used for Materials in Merch
   keyIngredients?: string[];
@@ -95,6 +125,8 @@ export interface BlogPost {
   readTime: string;
   image: string;
   date: string;
+  author?: string;
+  content?: string;
 }
 
 export interface UseCase {
@@ -141,6 +173,14 @@ export interface User {
     id: string;
     name: string;
     email: string;
+    role: 'retail' | 'wholesale' | 'admin'; // Added admin
+    status?: 'pending' | 'approved' | 'rejected'; // For wholesale
+    
+    // Business Details
+    companyName?: string;
+    abn?: string;
+    website?: string;
+
     points: number;
     tier: 'Rookie' | 'Pro' | 'Elite';
     joinedDate: string;

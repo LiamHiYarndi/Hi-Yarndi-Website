@@ -1,7 +1,9 @@
 
+
+
 import React, { useState } from 'react';
 import { PageView, Currency, SiteMode, User, Product } from '../types';
-import { Menu, X, ShoppingBag, Search, Sun, Moon, User as UserIcon } from 'lucide-react';
+import { Menu, X, ShoppingBag, Search, Sun, Moon, User as UserIcon, Shield, Box } from 'lucide-react';
 
 interface HeaderProps {
   cartCount: number;
@@ -26,21 +28,17 @@ export const Header: React.FC<HeaderProps> = ({
     isDarkMode,
     onToggleDarkMode,
     user,
-    onLoginClick
+    onLoginClick,
+    siteMode,
+    onSiteModeChange
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  const handleFallback = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-      e.currentTarget.style.display = 'none';
-      const fallback = document.getElementById('text-logo-fallback');
-      if (fallback) fallback.style.display = 'block';
-  };
 
   const navLinks: { label: string; view: PageView }[] = [
       { label: 'Shop', view: 'shop' },
       { label: 'Ranges', view: 'ranges' },
       { label: 'Science', view: 'science' },
-      { label: 'Blog', view: 'blog' },
+      { label: 'Hub', view: 'blog' },
       { label: 'About', view: 'about' },
   ];
 
@@ -51,37 +49,34 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <>
-        <header className="sticky top-0 z-[60] bg-theme-card border-b border-theme-border transition-colors duration-300 safe-top">
-            <div className="container mx-auto px-4 md:px-6 h-[70px] md:h-[80px] flex justify-between items-center">
+        <header className="sticky top-0 z-[60] bg-theme-bg/95 backdrop-blur border-b border-theme-border transition-colors duration-300 safe-top">
+            <div className="container mx-auto px-6 h-[80px] flex justify-between items-center">
                 
                 {/* Mobile Menu Button */}
                 <button 
-                    className="md:hidden p-2 -ml-2 text-theme-text hover:bg-theme-bg rounded-full transition-colors active:scale-95"
+                    className="md:hidden -ml-2 text-theme-text"
                     onClick={() => setIsMobileMenuOpen(true)}
-                    aria-label="Open Menu"
                 >
                     <Menu className="w-6 h-6" />
                 </button>
 
                 {/* Logo */}
-                <div className="flex items-center cursor-pointer select-none" onClick={() => onNavigate('home')}>
+                <div className="flex items-center cursor-pointer" onClick={() => onNavigate('home')}>
                     <img 
                         id="logo-img" 
-                        src={isDarkMode ? "logo-white.png" : "logo-black.png"} 
-                        alt="Hi Yarndi Logo" 
-                        className="h-8 md:h-10 w-auto object-contain"
-                        onError={handleFallback}
+                        src={isDarkMode ? "/images/Logos/logo-white.png" : "/images/Logos/logo-black.png"} 
+                        alt="Hi Yarndi" 
+                        className="h-10 w-auto object-contain"
                     />
-                    <div id="text-logo-fallback" className="hidden font-black text-xl md:text-2xl uppercase tracking-tighter text-theme-text ml-2">HI YARNDI</div>
                 </div>
 
-                {/* Desktop Nav */}
-                <nav className="hidden md:flex items-center gap-8">
-                    {navLinks.slice(0, 3).map((link) => ( // Show first 3 links on desktop header
+                {/* Desktop Nav - Minimal */}
+                <nav className="hidden md:flex items-center gap-12">
+                    {navLinks.map((link) => (
                         <span 
                             key={link.view}
                             onClick={() => onNavigate(link.view)}
-                            className="text-sm font-bold uppercase tracking-widest text-theme-text hover:text-accent cursor-pointer transition-colors"
+                            className="text-xs font-sans font-bold uppercase tracking-[0.15em] text-theme-text hover:text-accent cursor-pointer transition-colors"
                         >
                             {link.label}
                         </span>
@@ -89,37 +84,43 @@ export const Header: React.FC<HeaderProps> = ({
                 </nav>
 
                 {/* Actions */}
-                <div className="flex items-center gap-2 md:gap-4">
-                    {/* Search - Desktop Only */}
-                    <button className="hidden md:flex p-2 text-theme-text hover:bg-theme-bg rounded-full transition-colors">
-                        <Search className="w-5 h-5" />
-                    </button>
+                <div className="flex items-center gap-6">
+                    {/* Site Mode Toggle - Segmented Control */}
+                    <div className="hidden md:flex items-center bg-theme-sub/10 rounded-full p-1 border border-theme-border mr-2">
+                        <button 
+                            onClick={() => onSiteModeChange('performance')}
+                            className={`px-4 py-1.5 rounded-full text-[10px] font-sans font-bold uppercase tracking-widest transition-all duration-300 ${
+                                siteMode === 'performance' 
+                                ? 'bg-theme-text text-theme-bg shadow-sm' 
+                                : 'text-theme-sub hover:text-theme-text'
+                            }`}
+                        >
+                            Performance
+                        </button>
+                        <button 
+                            onClick={() => onSiteModeChange('merch')}
+                            className={`px-4 py-1.5 rounded-full text-[10px] font-sans font-bold uppercase tracking-widest transition-all duration-300 ${
+                                siteMode === 'merch' 
+                                ? 'bg-theme-text text-theme-bg shadow-sm' 
+                                : 'text-theme-sub hover:text-theme-text'
+                            }`}
+                        >
+                            Culture
+                        </button>
+                    </div>
 
-                    {/* Dark Mode Toggle */}
-                    <button 
-                        onClick={onToggleDarkMode}
-                        className="p-2 text-theme-text hover:bg-theme-bg rounded-full transition-colors"
-                        aria-label="Toggle Dark Mode"
-                    >
+                    <button onClick={onToggleDarkMode} className="text-theme-text hover:text-accent">
                         {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
                     </button>
 
-                    {/* Account */}
-                    <button 
-                        onClick={() => user ? onNavigate('account') : onLoginClick()}
-                        className="hidden md:flex p-2 text-theme-text hover:bg-theme-bg rounded-full transition-colors"
-                    >
+                    <button onClick={user ? () => user.role === 'admin' ? onNavigate('admin') : user.role === 'wholesale' ? onNavigate('wholesale') : onNavigate('account') : onLoginClick} className="text-theme-text hover:text-accent">
                         <UserIcon className="w-5 h-5" />
                     </button>
 
-                    {/* Cart */}
-                    <button 
-                        onClick={onOpenCart}
-                        className="relative p-2 text-theme-text hover:bg-theme-bg rounded-full transition-colors active:scale-95"
-                    >
+                    <button onClick={onOpenCart} className="relative text-theme-text hover:text-accent">
                         <ShoppingBag className="w-5 h-5" />
                         {cartCount > 0 && (
-                            <span className="absolute top-0 right-0 bg-accent text-off-black text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full animate-bounce-in">
+                            <span className="absolute -top-1 -right-1 bg-theme-text text-theme-bg text-[9px] font-bold w-3 h-3 flex items-center justify-center rounded-full">
                                 {cartCount}
                             </span>
                         )}
@@ -130,50 +131,56 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Mobile Menu Overlay */}
         <div 
-            className={`fixed inset-0 z-[70] bg-black/60 backdrop-blur-sm transition-opacity duration-300 md:hidden ${isMobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} 
+            className={`fixed inset-0 z-[70] bg-black/20 backdrop-blur-sm transition-opacity duration-300 md:hidden ${isMobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} 
             onClick={() => setIsMobileMenuOpen(false)} 
         />
         
-        {/* Mobile Menu Drawer */}
-        <div className={`fixed inset-y-0 left-0 z-[80] w-[85%] max-w-[320px] bg-theme-card border-r border-theme-border shadow-2xl transform transition-transform duration-300 ease-out md:hidden flex flex-col ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
-            <div className="p-5 border-b border-theme-border flex justify-between items-center bg-theme-card safe-top">
-                 <span className="font-heading font-black text-xl text-theme-text">MENU</span>
-                 <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 text-theme-text hover:bg-theme-bg rounded-full active:scale-90 transition-transform">
-                     <X className="w-6 h-6" />
+        {/* Minimal Mobile Drawer */}
+        <div className={`fixed inset-y-0 left-0 z-[80] w-[85%] max-w-[320px] bg-theme-bg border-r border-theme-border transform transition-transform duration-500 ease-out md:hidden flex flex-col ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+            <div className="p-6 border-b border-theme-border flex justify-between items-center">
+                 <span className="font-sans font-bold text-xl uppercase tracking-widest text-theme-text">Menu</span>
+                 <button onClick={() => setIsMobileMenuOpen(false)}>
+                     <X className="w-6 h-6 text-theme-text" />
                  </button>
             </div>
             
-            <div className="flex-1 overflow-y-auto py-4 bg-theme-card overscroll-contain">
-                <nav className="flex flex-col">
-                    {navLinks.map((link) => (
+            <div className="flex-1 py-8 px-6 space-y-6 overflow-y-auto">
+                {/* Mobile Site Mode Toggle */}
+                <div className="pb-6 border-b border-theme-border">
+                    <label className="text-[10px] font-bold uppercase tracking-widest text-theme-sub mb-3 block">Site Mode</label>
+                    <div className="flex items-center bg-theme-sub/10 rounded-full p-1 border border-theme-border">
                         <button 
-                            key={link.view}
-                            onClick={() => handleNavClick(link.view)}
-                            className="px-6 py-4 text-left text-lg font-bold text-theme-text hover:bg-theme-bg border-l-4 border-transparent hover:border-accent transition-all active:bg-theme-bg"
+                            onClick={() => {onSiteModeChange('performance'); setIsMobileMenuOpen(false)}}
+                            className={`flex-1 px-4 py-3 rounded-full text-[10px] font-sans font-bold uppercase tracking-widest transition-all duration-300 ${
+                                siteMode === 'performance' 
+                                ? 'bg-theme-text text-theme-bg shadow-sm' 
+                                : 'text-theme-sub hover:text-theme-text'
+                            }`}
                         >
-                            {link.label}
+                            Performance
                         </button>
-                    ))}
-                </nav>
-
-                <div className="mt-8 px-6 space-y-4">
-                     <button 
-                        onClick={() => {
-                            user ? handleNavClick('account') : onLoginClick();
-                            setIsMobileMenuOpen(false);
-                        }}
-                        className="flex items-center gap-3 w-full p-4 rounded-xl bg-theme-bg text-theme-text font-bold active:scale-[0.98] transition-transform"
-                    >
-                         <UserIcon className="w-5 h-5" />
-                         {user ? 'My Account' : 'Sign In / Join'}
-                     </button>
+                        <button 
+                            onClick={() => {onSiteModeChange('merch'); setIsMobileMenuOpen(false)}}
+                            className={`flex-1 px-4 py-3 rounded-full text-[10px] font-sans font-bold uppercase tracking-widest transition-all duration-300 ${
+                                siteMode === 'merch' 
+                                ? 'bg-theme-text text-theme-bg shadow-sm' 
+                                : 'text-theme-sub hover:text-theme-text'
+                            }`}
+                        >
+                            Culture
+                        </button>
+                    </div>
                 </div>
-            </div>
 
-            <div className="p-6 border-t border-theme-border bg-theme-card safe-bottom">
-                <p className="text-xs text-theme-sub text-center">
-                    &copy; {new Date().getFullYear()} Hi Yarndi
-                </p>
+                {navLinks.map((link) => (
+                    <button 
+                        key={link.view}
+                        onClick={() => handleNavClick(link.view)}
+                        className="block w-full text-left text-2xl font-serif italic text-theme-text hover:pl-4 transition-all"
+                    >
+                        {link.label}
+                    </button>
+                ))}
             </div>
         </div>
     </>

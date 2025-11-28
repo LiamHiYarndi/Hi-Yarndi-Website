@@ -37,7 +37,7 @@ export const MadeForAthletes: React.FC = () => {
 
             {/* Content Side - Bold Copy */}
             <div className="lg:pl-10 space-y-8">
-                <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-premium-black leading-[0.95] font-troopiland">
+                <h2 className="text-4xl md:text-5xl lg:text-6xl font-tropiland text-premium-black leading-[0.95]">
                     FOR THE ONES <br/>
                     WHO MOVE <br/>
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-yarndi-green to-green-600">DIFFERENT.</span>

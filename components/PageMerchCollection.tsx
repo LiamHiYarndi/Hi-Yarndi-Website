@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { products, formatPrice } from '../data';
 import { Product, Currency } from '../types';
@@ -36,8 +37,12 @@ export const PageMerchCollection: React.FC<Props> = ({ title, description, filte
                     style={{ animationDelay: `${index * 50}ms` }}
                     onClick={() => onProductClick(product)}
                   >
-                      <div className="aspect-[4/5] bg-white rounded-2xl mb-6 overflow-hidden relative">
-                         <img src={product.image} alt={product.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                      <div className="aspect-[4/5] bg-white rounded-2xl mb-6 relative [perspective:1000px] overflow-hidden">
+                         <img 
+                            src={product.image} 
+                            alt={product.title} 
+                            className="w-full h-full object-cover transition-transform duration-[1500ms] ease-in-out group-hover:[transform:rotateY(360deg)]" 
+                         />
                       </div>
                       <div>
                           <h3 className="font-heading font-bold text-xl text-off-black mb-1 leading-tight group-hover:text-gray-600 transition-colors">{product.title}</h3>

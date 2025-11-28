@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { products, formatPrice } from '../data';
 import { Product, Currency, SiteMode } from '../types';
-import { Shirt } from 'lucide-react';
+import { ProductCard } from './ProductCard';
 
 interface Props {
   onProductClick: (product: Product) => void;
@@ -13,61 +13,70 @@ interface Props {
 export const PageShop: React.FC<Props> = ({ onProductClick, currency, siteMode }) => {
   const [activeRange, setActiveRange] = useState<string>('All');
 
-  // Reset filter when mode changes
   useEffect(() => {
     setActiveRange('All');
   }, [siteMode]);
 
-  // Define available ranges based on mode
-  const performanceRanges = ['Recovery+', 'Energize^', 'Drip°', 'Fuel*'];
-  const merchCategories = ['Hoodies', 'Tees', 'Headwear', 'Accessories'];
-
+  const performanceRanges = ['Recovery+', 'Energize^', 'Drip°', 'Fuel*', 'Bundles'];
+  const merchCategories = ['Lifestyle', 'Performance', 'Gear', 'Bundles'];
   const availableFilters = siteMode === 'performance' ? performanceRanges : merchCategories;
 
-  // Filter Logic
   const filteredProducts = products.filter(p => {
-    // 1. Strict Mode Filter
-    const isMerch = p.range === 'Merch';
-    if (siteMode === 'performance' && isMerch) return false;
-    if (siteMode === 'merch' && !isMerch) return false;
+    // Determine Product Type
+    const isMixedBundle = p.range === 'Bundles' && p.id.includes('merch-bundle');
+    const isPerformanceBundle = p.range === 'Bundles' && !isMixedBundle;
+    const isConsumable = ['Recovery+', 'Energize^', 'Drip°', 'Fuel*'].includes(p.range);
+    const isWearable = p.range === 'Merch';
 
-    // 2. Active Range Filter
+    // 1. Filter by Mode Inclusion
+    if (siteMode === 'performance') {
+        // Performance Shop: Consumables + Performance Bundles + Mixed Bundles
+        if (!isConsumable && !isPerformanceBundle && !isMixedBundle) return false;
+    } else {
+        // Culture Shop: Wearables + Mixed Bundles ONLY
+        if (!isWearable && !isMixedBundle) return false;
+    }
+
+    // 2. Filter by Active Range Tab
     if (activeRange === 'All') return true;
+
+    if (activeRange === 'Bundles') {
+        // If 'Bundles' tab is selected, show any product with range 'Bundles' that passed the Mode filter above
+        return p.range === 'Bundles';
+    }
 
     if (siteMode === 'performance') {
         return p.range === activeRange;
     } else {
-        return p.title.toLowerCase().includes(activeRange.toLowerCase().slice(0, -1));
+        // Merch categories (Lifestyle, Performance, Gear)
+        return p.merchCategory === activeRange;
     }
   });
 
   return (
-    <div className={`min-h-screen pb-20 pt-10 animate-fade-in bg-theme-bg`}>
-      {/* Header */}
-      <div className={`py-16 border-b mb-10 transition-colors bg-theme-card border-theme-border`}>
-          <div className="container mx-auto px-6 text-center">
-              <h1 className="font-heading text-4xl md:text-6xl font-black text-theme-text mb-4 animate-fade-in-up">
-                  {siteMode === 'merch' ? 'THE COLLECTION' : 'SHOP HI YARNDI'}
-              </h1>
-              <p className="text-theme-sub text-lg max-w-xl mx-auto animate-fade-in-up delay-100">
-                  {siteMode === 'merch' 
-                    ? "Limited edition drops. Sustainable fabrics. Built for the hustle."
-                    : "Choose your range, pick your flavour, and back your training with plant-based performance."
-                  }
-              </p>
-          </div>
+    <div className="min-h-screen pb-32 pt-6 md:pt-10 animate-fade-in bg-theme-bg text-theme-text">
+      <div className="py-10 md:py-20 text-center border-b border-theme-border mb-8 md:mb-16 px-6">
+          <h1 className="font-sans text-3xl md:text-7xl font-bold uppercase tracking-editorial mb-4 md:mb-6">
+              {siteMode === 'merch' ? 'The Collection' : 'Shop All'}
+          </h1>
+          <p className="font-serif text-lg md:text-xl text-theme-sub italic max-w-lg mx-auto leading-relaxed">
+              {siteMode === 'merch' 
+                ? "Limited edition drops. Sustainable fabrics."
+                : "Plant-based performance for the modern athlete."
+              }
+          </p>
       </div>
 
-      <div className="container mx-auto px-6">
-          {/* Filters */}
-          <div className="flex flex-wrap justify-center gap-2 md:gap-4 mb-12 animate-fade-in-up delay-200">
+      <div className="container mx-auto px-4 md:px-6">
+          {/* Minimal Filters - Horizontal Scroll on Mobile */}
+          <div className="flex flex-nowrap md:flex-wrap overflow-x-auto justify-start md:justify-center gap-6 md:gap-8 mb-10 md:mb-20 pb-4 no-scrollbar px-2">
               <button
                 onClick={() => setActiveRange('All')}
-                className={`px-6 py-3 rounded-full text-sm font-bold transition-all duration-300 ${
+                className={`text-xs font-sans font-bold uppercase tracking-widest transition-all pb-1 border-b-2 whitespace-nowrap ${
                     activeRange === 'All' 
-                    ? 'bg-theme-text text-theme-card shadow-lg scale-105' 
-                    : 'bg-theme-card text-theme-sub hover:bg-theme-bg hover:scale-105 border border-transparent'
-                } border-theme-border`}
+                    ? 'border-theme-text text-theme-text' 
+                    : 'border-transparent text-theme-sub hover:text-theme-text'
+                }`}
               >
                   Shop All
               </button>
@@ -75,70 +84,32 @@ export const PageShop: React.FC<Props> = ({ onProductClick, currency, siteMode }
                   <button
                     key={filter}
                     onClick={() => setActiveRange(filter)}
-                    className={`px-6 py-3 rounded-full text-sm font-bold transition-all duration-300 ${
+                    className={`text-xs font-sans font-bold uppercase tracking-widest transition-all pb-1 border-b-2 whitespace-nowrap ${
                         activeRange === filter 
-                        ? 'bg-theme-text text-theme-card shadow-lg scale-105' 
-                        : 'bg-theme-card text-theme-sub hover:bg-theme-bg hover:scale-105 border border-theme-border'
+                        ? 'border-theme-text text-theme-text' 
+                        : 'border-transparent text-theme-sub hover:text-theme-text'
                     }`}
                   >
-                      {filter}
+                      {filter === 'Lifestyle' ? 'Everyday' : filter === 'Performance' ? 'Sportswear' : filter}
                   </button>
               ))}
           </div>
 
-          {/* Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-              {filteredProducts.map((product, index) => (
-                  <div 
+          {/* Grid - 2 Column on Mobile, 3/4 on Desktop */}
+          <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-10 md:gap-x-8 md:gap-y-16">
+              {filteredProducts.map((product) => (
+                  <ProductCard 
                     key={product.id} 
-                    className={`rounded-3xl p-5 transition-all hover:shadow-xl cursor-pointer group animate-fade-in-up bg-theme-card border border-theme-border`}
-                    style={{ animationDelay: `${index * 50}ms` }}
+                    product={product} 
                     onClick={() => onProductClick(product)}
-                  >
-                      {/* Range Pill */}
-                      <div className={`inline-block px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider mb-4
-                          ${product.range === 'Recovery+' ? 'bg-teal-50 text-teal-700' : ''}
-                          ${product.range === 'Energize^' ? 'bg-yellow-50 text-yellow-700' : ''}
-                          ${product.range === 'Drip°' ? 'bg-blue-50 text-blue-700' : ''}
-                          ${product.range === 'Fuel*' ? 'bg-orange-50 text-orange-700' : ''}
-                          ${product.range === 'Merch' ? 'bg-theme-bg border border-theme-border text-theme-text' : ''}
-                      `}>
-                          {product.range}
-                      </div>
-
-                      {/* Image */}
-                      <div className={`aspect-[4/5] rounded-2xl mb-6 overflow-hidden relative bg-theme-bg`}>
-                         <img src={product.image} alt={product.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                         {/* Quick Add Button (Desktop Hover) */}
-                         <div className="absolute bottom-4 left-4 right-4 translate-y-20 group-hover:translate-y-0 transition-transform duration-300 hidden md:block">
-                             <button className="w-full bg-theme-card/90 backdrop-blur text-theme-text py-3 rounded-xl font-bold text-sm shadow-lg hover:bg-accent hover:text-black transition-all">
-                                 View Product
-                             </button>
-                         </div>
-                      </div>
-
-                      {/* Info */}
-                      <div>
-                          <h3 className="font-heading font-bold text-xl text-theme-text mb-1 leading-tight group-hover:text-theme-sub transition-colors">{product.title}</h3>
-                          <p className="text-theme-sub text-xs mb-4 line-clamp-2">{product.description}</p>
-                          <div className="flex items-center justify-between">
-                              <div>
-                                  <span className="block font-bold text-lg text-theme-text">{formatPrice(product.price, currency)}</span>
-                                  {product.compareAtPrice && (
-                                      <span className="text-xs text-gray-400 line-through">{formatPrice(product.compareAtPrice, currency)}</span>
-                                  )}
-                              </div>
-                              <div className="text-xs font-medium bg-theme-bg px-2 py-1 rounded text-theme-sub">
-                                  {product.range === 'Merch' ? (
-                                      <div className="flex items-center gap-1"><Shirt className="w-3 h-3" /> Gear</div>
-                                  ) : (
-                                      <span>{product.flavours?.length} Flavours</span>
-                                  )}
-                              </div>
-                          </div>
-                      </div>
-                  </div>
+                    onAddToCart={() => {}} // Quick add handled in card
+                  />
               ))}
+              {filteredProducts.length === 0 && (
+                  <div className="col-span-full text-center py-20 opacity-50">
+                      <p className="font-sans font-bold uppercase text-sm">No products found in this category.</p>
+                  </div>
+              )}
           </div>
       </div>
     </div>

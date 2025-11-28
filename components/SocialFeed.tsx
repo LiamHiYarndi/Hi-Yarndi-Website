@@ -47,16 +47,16 @@ const socialPosts = [
 
 export const SocialFeed: React.FC = () => {
   return (
-    <section className="py-20 bg-white border-t border-gray-100 overflow-hidden">
+    <section className="py-20 bg-theme-bg border-t border-theme-border overflow-hidden">
         <div className="container mx-auto px-6 mb-12 flex flex-col md:flex-row justify-between items-end gap-6">
             <div>
                 <div className="flex items-center gap-2 mb-2 text-accent">
                     <Instagram className="w-5 h-5" />
-                    <span className="text-xs font-bold uppercase tracking-widest text-off-black">@HI.YARNDI</span>
+                    <span className="text-xs font-bold uppercase tracking-widest text-theme-text">@HI.YARNDI</span>
                 </div>
-                <h2 className="font-heading text-3xl md:text-5xl font-black text-off-black">JOIN THE CLUB.</h2>
+                <h2 className="font-heading text-3xl md:text-5xl font-black text-theme-text">JOIN THE CLUB.</h2>
             </div>
-            <a href="https://instagram.com" target="_blank" rel="noreferrer" className="group flex items-center gap-2 font-bold text-sm border-b-2 border-off-black pb-1 hover:text-gray-600 hover:border-gray-400 transition-all">
+            <a href="https://instagram.com" target="_blank" rel="noreferrer" className="group flex items-center gap-2 font-bold text-sm border-b-2 border-theme-text pb-1 hover:text-theme-sub hover:border-theme-sub transition-all text-theme-text">
                 Follow Us <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
             </a>
         </div>
@@ -66,7 +66,7 @@ export const SocialFeed: React.FC = () => {
             {socialPosts.map((post, idx) => (
                 <div 
                     key={post.id} 
-                    className="relative shrink-0 w-[280px] aspect-[4/5] rounded-2xl overflow-hidden group cursor-pointer snap-center shadow-lg"
+                    className="relative shrink-0 w-[280px] aspect-[4/5] rounded-2xl overflow-hidden group cursor-pointer snap-center shadow-lg bg-gray-200 dark:bg-gray-800"
                 >
                     <img src={post.image} alt="Social Post" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                     

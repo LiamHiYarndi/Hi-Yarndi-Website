@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Star, Check, User, Send } from 'lucide-react';
 import { Review } from '../types';
@@ -49,21 +50,21 @@ export const ProductReviews: React.FC<Props> = ({ productId, productTitle }) => 
   };
 
   return (
-    <div className="py-16 border-t border-gray-100 bg-white">
+    <div className="py-16 border-t border-theme-border bg-theme-card">
       <div className="container px-6 mx-auto max-w-[1000px]">
         
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 mb-12">
           <div>
-            <h2 className="font-heading text-2xl md:text-3xl font-bold text-off-black mb-2">Customer Reviews</h2>
+            <h2 className="font-heading text-2xl md:text-3xl font-bold text-theme-text mb-2">Customer Reviews</h2>
             <div className="flex items-center gap-3">
               <div className="flex text-accent">
                 {[1,2,3,4,5].map(star => (
                    <Star key={star} className={`w-5 h-5 ${star <= Math.round(Number(averageRating)) ? 'fill-current' : 'text-gray-200 fill-gray-200'}`} />
                 ))}
               </div>
-              <span className="font-bold text-lg">{averageRating}</span>
-              <span className="text-gray-400 text-sm">({reviews.length} Reviews)</span>
+              <span className="font-bold text-lg text-theme-text">{averageRating}</span>
+              <span className="text-theme-sub text-sm">({reviews.length} Reviews)</span>
             </div>
           </div>
           
@@ -74,11 +75,11 @@ export const ProductReviews: React.FC<Props> = ({ productId, productTitle }) => 
 
         {/* Review Form */}
         {showForm && (
-          <div className="bg-gray-50 p-6 rounded-2xl mb-12 animate-fade-in-up border border-gray-100">
-             <h3 className="font-bold text-lg mb-4">Write a Review for {productTitle}</h3>
+          <div className="bg-theme-bg p-6 rounded-2xl mb-12 animate-fade-in-up border border-theme-border">
+             <h3 className="font-bold text-lg mb-4 text-theme-text">Write a Review for {productTitle}</h3>
              <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                   <label className="block text-xs font-bold uppercase text-gray-500 mb-2">Rating</label>
+                   <label className="block text-xs font-bold uppercase text-theme-sub mb-2">Rating</label>
                    <div className="flex gap-1">
                       {[1,2,3,4,5].map(star => (
                          <button
@@ -96,23 +97,23 @@ export const ProductReviews: React.FC<Props> = ({ productId, productTitle }) => 
                 </div>
                 
                 <div>
-                   <label className="block text-xs font-bold uppercase text-gray-500 mb-2">Name</label>
+                   <label className="block text-xs font-bold uppercase text-theme-sub mb-2">Name</label>
                    <input 
                       type="text" 
                       value={name}
                       onChange={e => setName(e.target.value)}
-                      className="w-full p-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-accent"
+                      className="w-full p-3 rounded-xl border border-theme-border bg-theme-card text-theme-text focus:outline-none focus:ring-2 focus:ring-accent"
                       placeholder="Your Name"
                       required
                    />
                 </div>
 
                 <div>
-                   <label className="block text-xs font-bold uppercase text-gray-500 mb-2">Review</label>
+                   <label className="block text-xs font-bold uppercase text-theme-sub mb-2">Review</label>
                    <textarea 
                       value={comment}
                       onChange={e => setComment(e.target.value)}
-                      className="w-full p-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-accent h-32"
+                      className="w-full p-3 rounded-xl border border-theme-border bg-theme-card text-theme-text focus:outline-none focus:ring-2 focus:ring-accent h-32"
                       placeholder="How was the fit? The feel? The quality?"
                       required
                    />
@@ -126,19 +127,19 @@ export const ProductReviews: React.FC<Props> = ({ productId, productTitle }) => 
         {/* Reviews List */}
         <div className="space-y-6">
            {reviews.length === 0 ? (
-              <div className="text-center py-12 text-gray-400 bg-gray-50 rounded-2xl">
+              <div className="text-center py-12 text-theme-sub bg-theme-bg rounded-2xl">
                  <p>No reviews yet. Be the first to review {productTitle}!</p>
               </div>
            ) : (
               reviews.map((review) => (
-                 <div key={review.id} className="border-b border-gray-100 last:border-0 pb-8 last:pb-0 animate-fade-in-up">
+                 <div key={review.id} className="border-b border-theme-border last:border-0 pb-8 last:pb-0 animate-fade-in-up">
                     <div className="flex justify-between items-start mb-3">
                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 font-bold">
+                          <div className="w-10 h-10 rounded-full bg-theme-bg flex items-center justify-center text-theme-sub font-bold">
                              {review.user.charAt(0)}
                           </div>
                           <div>
-                             <h4 className="font-bold text-off-black text-sm">{review.user}</h4>
+                             <h4 className="font-bold text-theme-text text-sm">{review.user}</h4>
                              <div className="flex items-center gap-2">
                                 <span className="text-xs text-green-600 font-bold flex items-center gap-1">
                                    <Check className="w-3 h-3" /> {review.sport || 'Verified Buyer'}
@@ -153,7 +154,7 @@ export const ProductReviews: React.FC<Props> = ({ productId, productTitle }) => 
                           ))}
                        </div>
                     </div>
-                    <p className="text-gray-600 text-sm leading-relaxed pl-[52px]">
+                    <p className="text-theme-sub text-sm leading-relaxed pl-[52px]">
                        "{review.comment}"
                     </p>
                  </div>

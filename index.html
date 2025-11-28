@@ -3,13 +3,13 @@
 <html lang="en" class="scroll-smooth scroll-pt-24">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hi Yarndi - Recovery Evolved</title>
     
-    <!-- Fonts -->
+    <!-- Fonts: Inter (Sans), Cormorant Garamond (Serif), Titan One (Display/Tropiland) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;900&family=Montserrat:wght@700;800;900&family=Titan+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Titan+One&display=swap" rel="stylesheet">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -19,11 +19,11 @@
             theme: {
                 extend: {
                     colors: {
-                        'primary': '#1d4f36',
-                        'accent': '#ccff00',
-                        'yarndi-green': '#ccff00',
-                        'off-black': '#1a1a1a',
-                        'off-white': '#f4f4f4',
+                        'primary': '#0D1F16', /* Deep Forest Green */
+                        'accent': '#C25E00', /* Burnt Orange - Minimal Accent */
+                        'yarndi-green': '#4A5D23', /* Muted Sage */
+                        'off-black': '#1C1C1C', /* Deep Charcoal */
+                        'off-white': '#F9F9F6', /* Bone/Cream */
                         'theme-bg': 'var(--theme-bg)',
                         'theme-card': 'var(--theme-card)',
                         'theme-text': 'var(--theme-text)',
@@ -31,63 +31,59 @@
                         'theme-border': 'var(--theme-border)',
                     },
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        heading: ['Montserrat', 'sans-serif'],
-                        display: ['Titan One', 'cursive'],
+                        sans: ['Inter', 'sans-serif'], /* Headers: Bold, Uppercase */
+                        serif: ['Cormorant Garamond', 'serif'], /* Body: Editorial Look */
+                        tropiland: ['"Titan One"', 'cursive'], /* Custom Feature Font */
+                    },
+                    letterSpacing: {
+                        'editorial': '0.15em',
                     },
                     animation: {
-                        'blob': "blob 7s infinite",
-                        'float': "float 6s ease-in-out infinite",
-                        'fade-in': 'fadeIn 0.5s ease-out forwards',
-                        'fade-in-up': 'fadeInUp 0.5s ease-out forwards',
-                        'slide-in-left': 'slideInLeft 0.5s ease-out forwards',
-                        'slide-in-right': 'slideInRight 0.5s ease-out forwards',
-                        'zoom-in': 'zoomIn 0.5s ease-out forwards',
-                        'bounce-in': 'bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards',
-                        'swirl': 'swirl 10s linear infinite',
-                        'shimmer': 'shimmer 2s infinite',
+                        'fade-in': 'fadeIn 0.8s ease-out forwards',
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'slide-in-left': 'slideInLeft 0.8s ease-out forwards',
+                        'slide-in-right': 'slideInRight 0.8s ease-out forwards',
+                        'zoom-in': 'zoomIn 0.8s ease-out forwards',
+                        'infinite-scroll': 'infinite-scroll 40s linear infinite',
+                        'blob': 'blob 7s infinite',
+                        'spin-slow': 'spin 12s linear infinite',
+                        'flow': 'flow 2s linear infinite',
+                        'shimmer': 'shimmer 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     },
                     keyframes: {
-                        blob: {
-                            "0%": { transform: "translate(0px, 0px) scale(1)" },
-                            "33%": { transform: "translate(30px, -50px) scale(1.1)" },
-                            "66%": { transform: "translate(-20px, 20px) scale(0.9)" },
-                            "100%": { transform: "translate(0px, 0px) scale(1)" }
-                        },
-                        float: {
-                            "0%, 100%": { transform: "translateY(0)" },
-                            "50%": { transform: "translateY(-20px)" }
-                        },
                         fadeIn: {
                             "0%": { opacity: "0" },
                             "100%": { opacity: "1" }
                         },
                         fadeInUp: {
-                            "0%": { opacity: "0", transform: "translateY(20px)" },
+                            "0%": { opacity: "0", transform: "translateY(40px)" },
                             "100%": { opacity: "1", transform: "translateY(0)" }
                         },
                         slideInLeft: {
-                            "0%": { opacity: "0", transform: "translateX(-20px)" },
+                            "0%": { opacity: "0", transform: "translateX(-40px)" },
                             "100%": { opacity: "1", transform: "translateX(0)" }
                         },
                         slideInRight: {
-                            "0%": { opacity: "0", transform: "translateX(20px)" },
+                            "0%": { opacity: "0", transform: "translateX(40px)" },
                             "100%": { opacity: "1", transform: "translateX(0)" }
                         },
                         zoomIn: {
                             "0%": { opacity: "0", transform: "scale(0.95)" },
                             "100%": { opacity: "1", transform: "scale(1)" }
                         },
-                        bounceIn: {
-                            "0%": { opacity: "0", transform: "scale(0.3)" },
-                            "50%": { opacity: "1", transform: "scale(1.05)" },
-                            "70%": { transform: "scale(0.9)" },
-                            "100%": { opacity: "1", transform: "scale(1)" }
+                        'infinite-scroll': {
+                            from: { transform: 'translateX(0)' },
+                            to: { transform: 'translateX(-50%)' },
                         },
-                        swirl: {
-                           "0%": { backgroundPosition: "0% 50%" },
-                           "50%": { backgroundPosition: "100% 50%" },
-                           "100%": { backgroundPosition: "0% 50%" }
+                        blob: {
+                            "0%": { transform: "translate(0px, 0px) scale(1)" },
+                            "33%": { transform: "translate(30px, -50px) scale(1.1)" },
+                            "66%": { transform: "translate(-20px, 20px) scale(0.9)" },
+                            "100%": { transform: "translate(0px, 0px) scale(1)" }
+                        },
+                        flow: {
+                            "0%": { transform: "translateX(-100%)" },
+                            "100%": { transform: "translateX(100%)" }
                         },
                         shimmer: {
                             "0%": { transform: "translateX(-100%)" },
@@ -101,29 +97,44 @@
 
     <style>
         :root {
-            --theme-bg: #f9fafb;
-            --theme-card: #ffffff;
-            --theme-text: #1a1a1a;
-            --theme-sub: #6b7280;
-            --theme-border: #e5e7eb;
+            /* Luxury Palette: Bone/Cream & Deep Forest */
+            --theme-bg: #F9F9F6; 
+            --theme-card: #F9F9F6; /* Cards blend into background ("Kill Container") */
+            --theme-text: #0D1F16;
+            --theme-sub: #4B5563;
+            --theme-border: #E5E5E5; /* Very subtle border */
         }
 
-        body.dark-mode {
-            --theme-bg: #0f172a;
-            --theme-card: #1e293b;
-            --theme-text: #ffffff;
-            --theme-sub: #94a3b8;
-            --theme-border: #334155;
+        body.dark {
+            /* Dark Luxury: Deepest Forest & Bone Text */
+            --theme-bg: #05110b; 
+            --theme-card: #05110b;
+            --theme-text: #F9F9F6;
+            --theme-sub: #9CA3AF;
+            --theme-border: #1F2937;
         }
 
         body {
             -webkit-tap-highlight-color: transparent;
             background-color: var(--theme-bg);
             color: var(--theme-text);
-            transition: background-color 0.3s, color 0.3s;
+            transition: background-color 0.5s, color 0.5s;
+            font-family: 'Cormorant Garamond', serif; /* Default to serif for body */
+            font-size: 16px; /* Optimized for Mobile Density */
         }
 
-        /* Utility */
+        @media (min-width: 768px) {
+            body {
+                font-size: 18px; /* Larger luxury type on desktop */
+            }
+        }
+        
+        h1, h2, h3, h4, h5, h6, .font-heading {
+            font-family: 'Inter', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+        }
+
         .no-scrollbar::-webkit-scrollbar {
             display: none;
         }
@@ -135,25 +146,26 @@
         .safe-top { padding-top: env(safe-area-inset-top); }
         .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
         
-        /* Ticker Animation for Marquee component */
         .ticker-bar {
             width: 100%;
-            background-color: #1a1a1a;
-            color: #ccff00;
+            background-color: #0D1F16;
+            color: #F9F9F6;
             overflow: hidden;
             white-space: nowrap;
-            padding: 0.5rem 0;
+            padding: 0.75rem 0;
             display: flex;
             gap: 2rem;
             align-items: center;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
         }
         .ticker-bar span {
             display: inline-block;
             padding-left: 100%;
-            animation: ticker 20s linear infinite;
-            font-weight: 800;
+            animation: ticker 10s linear infinite; /* Sped up */
+            font-weight: 600;
             text-transform: uppercase;
-            font-style: italic;
         }
 
         @keyframes ticker {
@@ -164,19 +176,19 @@
 <script type="importmap">
 {
   "imports": {
-    "vite": "https://aistudiocdn.com/vite@^7.2.4",
-    "react-markdown": "https://aistudiocdn.com/react-markdown@^10.1.0",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.554.0",
-    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.1",
-    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
     "react": "https://aistudiocdn.com/react@^19.2.0",
-    "react/": "https://aistudiocdn.com/react@^19.2.0/"
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.554.0",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
+    "react-markdown": "https://aistudiocdn.com/react-markdown@^10.1.0",
+    "vite": "https://aistudiocdn.com/vite@^7.2.4",
+    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.1"
   }
 }
 </script>
 </head>
-<body class="font-sans antialiased">
+<body class="antialiased selection:bg-primary selection:text-white">
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
 </body>

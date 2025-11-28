@@ -18,29 +18,25 @@ export const Button: React.FC<ButtonProps> = ({
   ...props 
 }) => {
   
-  // Base styles
-  const baseStyles = "relative inline-flex items-center justify-center font-bold rounded-full transition-all duration-300 ease-out active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden group";
+  // Base styles: Pill shape, uppercase sans-serif, wide tracking
+  const baseStyles = "inline-flex items-center justify-center font-sans font-bold uppercase tracking-editorial rounded-full transition-all duration-300 ease-out disabled:opacity-50 disabled:cursor-not-allowed";
   
-  // Variant specific styles (defining colors)
+  // Variant specific styles (Luxury Minimalist)
   const variantStyles = {
-    primary: "bg-off-black text-white shadow-md hover:shadow-xl border border-transparent",
-    secondary: "bg-accent text-off-black shadow-glow hover:shadow-glow-lg border border-transparent",
-    outline: "bg-transparent border-2 border-off-black text-off-black hover:text-white",
-    ghost: "bg-transparent text-off-black hover:bg-gray-100"
-  };
-
-  // Hover liquid fill colors
-  const liquidColor = {
-      primary: "bg-gray-800",
-      secondary: "bg-white/30",
-      outline: "bg-off-black",
-      ghost: "bg-gray-200"
+    // Solid Theme Text / Theme BG (Inverts based on mode)
+    primary: "bg-theme-text text-theme-bg hover:opacity-90 hover:scale-[1.02]",
+    // Subtle Accent
+    secondary: "bg-accent text-white hover:bg-opacity-90 hover:scale-[1.02]",
+    // Thin Border
+    outline: "bg-transparent border border-theme-text text-theme-text hover:bg-theme-text hover:text-theme-bg",
+    // Ghost
+    ghost: "bg-transparent text-theme-text hover:text-theme-sub"
   };
 
   const sizes = {
-    sm: "px-4 py-2 text-xs",
-    md: "px-6 py-3 text-sm",
-    lg: "px-8 py-4 text-base"
+    sm: "px-6 py-2 text-[10px]",
+    md: "px-8 py-3 text-xs",
+    lg: "px-10 py-4 text-sm"
   };
 
   return (
@@ -54,16 +50,7 @@ export const Button: React.FC<ButtonProps> = ({
       `}
       {...props}
     >
-      {/* Liquid Fill Element */}
-      <div className={`absolute inset-0 translate-y-[102%] group-hover:translate-y-0 transition-transform duration-500 ease-in-out curve-top ${liquidColor[variant]}`}>
-         {/* Optional wave shape via SVG or CSS could go here, but smooth fill is liquid enough */}
-         <div className="absolute -top-[10px] left-0 right-0 h-[20px] bg-inherit rounded-[50%] scale-x-150 origin-bottom group-hover:scale-x-100 transition-transform duration-500"></div>
-      </div>
-
-      {/* Content - Z-index to stay on top */}
-      <span className="relative z-10 flex items-center justify-center gap-2">
-          {children}
-      </span>
+      {children}
     </button>
   );
 };
