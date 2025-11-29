@@ -1,6 +1,3 @@
-
-
-
 import React, { useState } from 'react';
 import { PageView, Currency, SiteMode, User, Product } from '../types';
 import { Menu, X, ShoppingBag, Search, Sun, Moon, User as UserIcon, Shield, Box } from 'lucide-react';
@@ -62,9 +59,10 @@ export const Header: React.FC<HeaderProps> = ({
 
                 {/* Logo */}
                 <div className="flex items-center cursor-pointer" onClick={() => onNavigate('home')}>
+                    {/* FIXED: Paths now point to the root public folder (no /images/logos/) */}
                     <img 
                         id="logo-img" 
-                        src={isDarkMode ? "/images/Logos/logo-white.png" : "/images/Logos/logo-black.png"} 
+                        src={isDarkMode ? "/logo-white.png" : "/logo-black.png"} 
                         alt="Hi Yarndi" 
                         className="h-10 w-auto object-contain"
                     />
