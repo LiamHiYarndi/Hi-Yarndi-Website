@@ -22,9 +22,9 @@ export const formatPrice = (priceInAud: number, currency: Currency): string => {
 };
 
 // --- IMAGE HELPERS ---
-// FIXED: Changed to 'Images' (Capital I) to match your Finder folder structure
-const localProduct = (filename: string) => `/Images/products/${filename}`;
-const localLogo = (filename: string) => `/Images/logos/${filename}`;
+// FIXED: Must be lowercase 'images' to match your 'public/images' folder
+const localProduct = (filename: string) => `/images/products/${filename}`;
+const localLogo = (filename: string) => `/images/logos/${filename}`;
 const unsplash = (id: string) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=800`;
 
 // --- LOGO EXPORT ---
