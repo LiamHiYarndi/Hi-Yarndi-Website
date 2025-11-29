@@ -22,7 +22,7 @@ export const formatPrice = (priceInAud: number, currency: Currency): string => {
 };
 
 // --- IMAGE HELPERS ---
-// FIXED: Must be lowercase 'images' to match your 'public/images' folder
+// FIXED: Changed to lowercase 'images' to match the server folder structure
 const localProduct = (filename: string) => `/images/products/${filename}`;
 const localLogo = (filename: string) => `/images/logos/${filename}`;
 const unsplash = (id: string) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=800`;
@@ -267,7 +267,7 @@ export const products: Product[] = [
       price: 29.95,
       compareAtPrice: 34.45,
       comingSoon: true,
-      image: localProduct(`Recovery-Blue-Raspberry.png`), // Switched to confirmed file
+      image: localProduct(`Recovery-Blue-Raspberry.png`), 
       goals: ['Recovery', 'Energy', 'Hydration'],
       benefits: ['Complete sampling of the range', 'Perfect for first time users'],
       usage: { when: 'All day', how: 'Use as directed per product' },
@@ -287,7 +287,7 @@ export const products: Product[] = [
       price: 34.95,
       compareAtPrice: 39.95,
       comingSoon: true,
-      image: localProduct(`Energize-Sour-Watermelon.png`), // Switched to confirmed file
+      image: localProduct(`Energize-Sour-Watermelon.png`), 
       goals: ['Energy', 'Recovery'],
       benefits: ['Pre & Post workout covered', 'Save on essentials'],
       usage: { when: 'Pre & Post Workout', how: 'Energize^ before, Recovery+ after.' },
@@ -305,7 +305,7 @@ export const products: Product[] = [
       longDescription: "Includes:\n- 4x Mixed Recovery+ Sachets\n\n**Price: $9.95**",
       price: 9.95,
       comingSoon: true,
-      image: localProduct(`Recovery-Strawberry-Kiwi.png`), // Switched to confirmed file
+      image: localProduct(`Recovery-Strawberry-Kiwi.png`), 
       goals: ['Recovery'],
       benefits: ['Try all flavours', 'Travel friendly'],
       usage: { when: 'Post Workout', how: 'Mix with water' },
@@ -323,7 +323,7 @@ export const products: Product[] = [
       price: 59.95,
       compareAtPrice: 65.00, 
       comingSoon: true,
-      image: localProduct(`Drip-Lychee-Burst.png`), // Switched to confirmed file
+      image: localProduct(`Drip-Lychee-Burst.png`), 
       goals: ['Performance'],
       benefits: ['Complete stack', 'Maximum results'],
       usage: { when: 'Daily', how: 'Follow individual protocols' },
@@ -343,7 +343,7 @@ export const products: Product[] = [
       price: 38.95,
       compareAtPrice: 54.00,
       comingSoon: true,
-      image: localProduct(`Drip-Passionfruit-Pulp.png`), // Switched to confirmed file
+      image: localProduct(`Drip-Passionfruit-Pulp.png`), 
       goals: ['Hydration', 'Gut Health'],
       benefits: ['Stock up the fridge', 'Great for sharing'],
       usage: { when: 'Anytime', how: 'Serve cold' },
@@ -689,7 +689,7 @@ export const blogPosts: BlogPost[] = [
     category: 'Performance',
     excerpt: 'Why caffeine alone isn’t enough. Exploring the synergy between L-Tyrosine and Citrulline Malate for sustained cognitive drive.',
     readTime: '8 min read',
-    image: localProduct(`Energize-Sour-Watermelon.png`), // Switched to confirmed file
+    image: localProduct(`Energize-Sour-Watermelon.png`), 
     date: 'Oct 12, 2023',
     author: 'Dr. Liam H.',
     content: `
@@ -736,7 +736,7 @@ Energize^ is not a compromise between endurance and power, but a specialized sol
     category: 'Gut Health',
     excerpt: 'Moving beyond basic kombucha. How spore-based probiotics and dual-fiber matrices solve the survivability crisis.',
     readTime: '6 min read',
-    image: localProduct(`Drip-Passionfruit-Pulp.png`), // Switched to confirmed file
+    image: localProduct(`Drip-Passionfruit-Pulp.png`), 
     date: 'Sep 28, 2023',
     author: 'Sarah J., Nutritionist',
     content: `
@@ -828,7 +828,7 @@ Fuel* moves away from the "single magic ingredient" model toward a synergistic s
     category: 'Recovery',
     excerpt: 'From mTOR activation to cortisol management. The stoichiometry of the 3:1 Carbohydrate-to-Protein ratio.',
     readTime: '7 min read',
-    image: localProduct(`Recovery-Blue-Raspberry.png`), // Switched to confirmed file
+    image: localProduct(`Recovery-Blue-Raspberry.png`), 
     date: 'Aug 20, 2023',
     author: 'Dr. Liam H.',
     content: `
