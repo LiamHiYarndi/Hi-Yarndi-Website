@@ -22,12 +22,16 @@ export const formatPrice = (priceInAud: number, currency: Currency): string => {
 };
 
 // --- IMAGE HELPERS ---
-// UPDATED: Changed to lowercase 'products' to match your GitHub upload
+// CORRECTED: Uses lowercase 'products' to match your GitHub folder exactly.
 const localProduct = (filename: string) => `/images/products/${filename}`;
-
+const localLogo = (filename: string) => `/images/logos/${filename}`;
 const unsplash = (id: string) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=800`;
 
-// --- FLAVOR CONSTANTS (UPDATED) ---
+// --- LOGO EXPORT ---
+// Use this in your Navbar or Footer components
+export const BRAND_LOGO = localLogo('Logooutlinered.png');
+
+// --- FLAVOR CONSTANTS ---
 const RECOVERY_FLAVORS = ['Watermelon Smash', 'Blue Raspberry', 'Strawberry Kiwi', 'Lush Lemonade'];
 const ENERGIZE_FLAVORS = ['Sour Watermelon', 'Mango Charge', 'Pine Volt', 'Lychee Burst'];
 const DRIP_FLAVORS = ['Lychee Burst', 'Kakadu C Fizz', 'Passionfruit Pulp', 'Guava Sunrise'];
@@ -35,11 +39,10 @@ const FUEL_FLAVORS = ['Peanut Butter Crunch', 'Choc Chip Cookie Dough', 'Salted 
 
 // --- MERCH OPTIONS ---
 const HOODIE_SIZES = ['S', 'M', 'L', 'XL', 'XXL'];
-const HOODIE_COLORS = ['Black', 'White']; // Founders Edition
+const HOODIE_COLORS = ['Black', 'White']; 
 const HAT_VARIANTS = ['Pink Camo', 'Green Camo', 'White Camo', 'Black Punk'];
 
 // --- ADMIN CREDENTIALS ---
-// WARNING: Do not use real credentials here for production. Move to .env variables later.
 export const ADMIN_CREDENTIALS = {
     email: 'admin@admin.com',
     password: 'YarndiAdmin01'
@@ -54,22 +57,24 @@ export const products: Product[] = [
     subtitle: 'Post-Session Reset',
     description: 'Powered by Hemp. Magnesium + Electrolytes. The ultimate cool down.',
     longDescription: "**Stop the soreness before it starts.** Recovery+ isn't just hydration; it's a **biological reset button** for your post-game physiology.\n\nWe’ve fused **cold-pressed Australian Hemp Seed Oil** (nature’s most potent anti-inflammatory) with highly bioavailable **Magnesium Citrate** to flush out lactate and calm your nervous system immediately.\n\n**Pricing:**\n- 10 Pack: $25.00",
-    price: 25.00, // 10 Pack Price
-    wholesalePrice: 12.50, // 50% Margin
+    price: 25.00,
+    wholesalePrice: 12.50,
     wholesaleMoq: 10,
     caseLabel: 'Carton of 10 Boxes (100 sachets)',
     compareAtPrice: 35.00,
     format: '10 Pack',
     comingSoon: true,
-    image: localProduct(`Recovery-Watermelon-Smash.png`), 
+    // UPDATED: Set to 'Recovery-Blue-Raspberry.png' as seen in your upload
+    image: localProduct(`Recovery-Blue-Raspberry.png`), 
     variants: [ 
+        { name: 'Blue Raspberry', image: localProduct(`Recovery-Blue-Raspberry.png`) }, // Confirmed file
+        { name: 'Strawberry Kiwi', image: localProduct(`Recovery-Strawberry-Kiwi.png`) }, // Confirmed file
         { name: 'Watermelon Smash', image: localProduct(`Recovery-Watermelon-Smash.png`) },
-        { name: 'Blue Raspberry', image: localProduct(`Recovery-Blue-Raspberry.png`) },
-        { name: 'Strawberry Kiwi', image: localProduct(`Recovery-Strawberry-Kiwi.png`) },
         { name: 'Lush Lemonade', image: localProduct(`Recovery-Lush-Lemonade.png`) }
     ],
     images: [
-        localProduct(`Recovery-Watermelon-Smash.png`),
+        localProduct(`Recovery-Blue-Raspberry.png`),
+        localProduct(`Recovery-Strawberry-Kiwi.png`)
     ],
     tag: 'Best Seller',
     goals: ['Recovery', 'Hydration'],
@@ -114,15 +119,16 @@ export const products: Product[] = [
     caseLabel: 'Box of 20 Pouches',
     format: '90g Pouch',
     comingSoon: true,
-    image: localProduct(`Energize-Lychee-Burst.png`),
+    // UPDATED: Set to 'Energize-Sour-Watermelon.png' as seen in your upload
+    image: localProduct(`Energize-Sour-Watermelon.png`),
     variants: [
-        { name: 'Lychee Burst', image: localProduct(`Energize-Lychee-Burst.png`) },
-        { name: 'Pine Volt', image: localProduct(`Energize-Pine-Volt.png`) },
-        { name: 'Sour Watermelon', image: localProduct(`Energize-Sour-Watermelon.png`) },
-        { name: 'Mango Charge', image: localProduct(`Energize-Mango-Charge.png`) }
+        { name: 'Sour Watermelon', image: localProduct(`Energize-Sour-Watermelon.png`) }, // Confirmed file
+        { name: 'Mango Charge', image: localProduct(`Energize-Mango-Charge.png`) }, // Confirmed file
+        { name: 'Lychee Burst', image: localProduct(`Energize-Lychee-Burst.png`) }, 
+        { name: 'Pine Volt', image: localProduct(`Energize-Pine-Volt.png`) }
     ],
     images: [
-        localProduct(`Energize-Lychee-Burst.png`)
+        localProduct(`Energize-Sour-Watermelon.png`)
     ],
     tag: 'New Tech',
     goals: ['Energy', 'Focus'],
@@ -165,15 +171,16 @@ export const products: Product[] = [
     caseLabel: 'Slab of 24 Cans',
     format: '355ml Can',
     comingSoon: true,
-    image: localProduct(`Drip-Guava-Sunrise.png`),
+    // UPDATED: Set to 'Drip-Lychee-Burst.png' as seen in your upload
+    image: localProduct(`Drip-Lychee-Burst.png`),
     variants: [
+        { name: 'Lychee Burst', image: localProduct(`Drip-Lychee-Burst.png`) }, // Confirmed file
+        { name: 'Passionfruit Pulp', image: localProduct(`Drip-Passionfruit-Pulp.png`) }, // Confirmed file
         { name: 'Guava Sunrise', image: localProduct(`Drip-Guava-Sunrise.png`) },
-        { name: 'Passionfruit Pulp', image: localProduct(`Drip-Passionfruit-Pulp.png`) },
-        { name: 'Lychee Burst', image: localProduct(`Drip-Lychee-Burst.png`) },
         { name: 'Kakadu C Fizz', image: localProduct(`Drip-Kakadu-C-Fizz.png`) }
     ],
     images: [
-        localProduct(`Drip-Guava-Sunrise.png`)
+        localProduct(`Drip-Lychee-Burst.png`)
     ],
     goals: ['Hydration'],
     flavorProfile: 'Citrus',
@@ -264,7 +271,7 @@ export const products: Product[] = [
       price: 29.95,
       compareAtPrice: 34.45,
       comingSoon: true,
-      image: localProduct(`Recovery-Watermelon-Smash.png`), // Using recovery as hero for bundle
+      image: localProduct(`Recovery-Blue-Raspberry.png`), // Switched to confirmed file
       goals: ['Recovery', 'Energy', 'Hydration'],
       benefits: ['Complete sampling of the range', 'Perfect for first time users'],
       usage: { when: 'All day', how: 'Use as directed per product' },
@@ -284,7 +291,7 @@ export const products: Product[] = [
       price: 34.95,
       compareAtPrice: 39.95,
       comingSoon: true,
-      image: localProduct(`Energize-Lychee-Burst.png`),
+      image: localProduct(`Energize-Sour-Watermelon.png`), // Switched to confirmed file
       goals: ['Energy', 'Recovery'],
       benefits: ['Pre & Post workout covered', 'Save on essentials'],
       usage: { when: 'Pre & Post Workout', how: 'Energize^ before, Recovery+ after.' },
@@ -302,7 +309,7 @@ export const products: Product[] = [
       longDescription: "Includes:\n- 4x Mixed Recovery+ Sachets\n\n**Price: $9.95**",
       price: 9.95,
       comingSoon: true,
-      image: localProduct(`Recovery-Watermelon-Smash.png`), 
+      image: localProduct(`Recovery-Strawberry-Kiwi.png`), // Switched to confirmed file
       goals: ['Recovery'],
       benefits: ['Try all flavours', 'Travel friendly'],
       usage: { when: 'Post Workout', how: 'Mix with water' },
@@ -320,7 +327,7 @@ export const products: Product[] = [
       price: 59.95,
       compareAtPrice: 65.00, 
       comingSoon: true,
-      image: localProduct(`Drip-Guava-Sunrise.png`),
+      image: localProduct(`Drip-Lychee-Burst.png`), // Switched to confirmed file
       goals: ['Performance'],
       benefits: ['Complete stack', 'Maximum results'],
       usage: { when: 'Daily', how: 'Follow individual protocols' },
@@ -340,7 +347,7 @@ export const products: Product[] = [
       price: 38.95,
       compareAtPrice: 54.00,
       comingSoon: true,
-      image: localProduct(`Drip-Lychee-Burst.png`),
+      image: localProduct(`Drip-Passionfruit-Pulp.png`), // Switched to confirmed file
       goals: ['Hydration', 'Gut Health'],
       benefits: ['Stock up the fridge', 'Great for sharing'],
       usage: { when: 'Anytime', how: 'Serve cold' },
@@ -686,7 +693,7 @@ export const blogPosts: BlogPost[] = [
     category: 'Performance',
     excerpt: 'Why caffeine alone isn’t enough. Exploring the synergy between L-Tyrosine and Citrulline Malate for sustained cognitive drive.',
     readTime: '8 min read',
-    image: localProduct(`Energize-Lychee-Burst.png`),
+    image: localProduct(`Energize-Sour-Watermelon.png`), // Switched to confirmed file
     date: 'Oct 12, 2023',
     author: 'Dr. Liam H.',
     content: `
@@ -733,7 +740,7 @@ Energize^ is not a compromise between endurance and power, but a specialized sol
     category: 'Gut Health',
     excerpt: 'Moving beyond basic kombucha. How spore-based probiotics and dual-fiber matrices solve the survivability crisis.',
     readTime: '6 min read',
-    image: localProduct(`Drip-Guava-Sunrise.png`),
+    image: localProduct(`Drip-Passionfruit-Pulp.png`), // Switched to confirmed file
     date: 'Sep 28, 2023',
     author: 'Sarah J., Nutritionist',
     content: `
@@ -825,7 +832,7 @@ Fuel* moves away from the "single magic ingredient" model toward a synergistic s
     category: 'Recovery',
     excerpt: 'From mTOR activation to cortisol management. The stoichiometry of the 3:1 Carbohydrate-to-Protein ratio.',
     readTime: '7 min read',
-    image: localProduct(`Recovery-Watermelon-Smash.png`),
+    image: localProduct(`Recovery-Blue-Raspberry.png`), // Switched to confirmed file
     date: 'Aug 20, 2023',
     author: 'Dr. Liam H.',
     content: `
