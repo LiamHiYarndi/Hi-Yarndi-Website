@@ -9,7 +9,6 @@ export const Hero: React.FC = () => {
   // 2. Copy the ID (the random characters between /d/ and /view)
   // 3. Paste it below
   
-  // Replace with your Mascot Image ID
  const MASCOT_URL = "/images/logos/mascot-duck.png";
 
   return (
