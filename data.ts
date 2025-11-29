@@ -22,8 +22,8 @@ export const formatPrice = (priceInAud: number, currency: Currency): string => {
 };
 
 // --- IMAGE HELPERS ---
-// Helper to use local path
-const localProduct = (filename: string) => `/images/Products/${filename}`;
+// UPDATED: Changed to lowercase 'products' to match your GitHub upload
+const localProduct = (filename: string) => `/images/products/${filename}`;
 
 const unsplash = (id: string) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=800`;
 
