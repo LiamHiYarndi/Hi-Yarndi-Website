@@ -1,6 +1,3 @@
-
-
-
 import React from 'react';
 import { Button } from './Button';
 import { Play, ArrowRight } from 'lucide-react';
@@ -70,10 +67,11 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
         {/* Visual Asset - Sharp, Floating */}
         <div className="relative flex justify-center lg:justify-end animate-fade-in order-1 lg:order-2">
           <div className="relative z-10 w-[240px] sm:w-[400px] lg:w-full max-w-lg">
+             {/* FIXED: Removed 'grayscale' and 'contrast-125' so the mascot shows in full original color */}
              <img 
                 src={MASCOT_URL} 
                 alt="Yarndi Mascot" 
-                className="w-full h-auto object-contain drop-shadow-2xl grayscale contrast-125 hover:grayscale-0 transition-all duration-1000"
+                className="w-full h-auto object-contain drop-shadow-2xl"
              />
              
              {/* Minimal Floating Badge */}
