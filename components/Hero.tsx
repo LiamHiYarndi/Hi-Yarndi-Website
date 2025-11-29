@@ -12,7 +12,7 @@ interface HeroProps {
 
 export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
   // Use the local duck mascot image
-  const MASCOT_URL = "/images/Logos/mascot-duck.png";
+  const MASCOT_URL = "/mascot-duck.png";
 
   const handleWatchFilm = () => {
       window.open('https://www.youtube.com/@HiYarndi', '_blank');
