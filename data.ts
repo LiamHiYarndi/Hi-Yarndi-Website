@@ -22,12 +22,13 @@ export const formatPrice = (priceInAud: number, currency: Currency): string => {
 };
 
 // --- IMAGE HELPERS ---
-// FIXED: Changed to lowercase 'images' to match the server folder structure
 const localProduct = (filename: string) => `/images/products/${filename}`;
+// Note: Ensure your logo is actually in public/images/logos/
 const localLogo = (filename: string) => `/images/logos/${filename}`;
 const unsplash = (id: string) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=800`;
 
 // --- LOGO EXPORT ---
+// Ensure "Logooutlinered.png" exists inside public/images/logos/ exactly like this
 export const BRAND_LOGO = localLogo('Logooutlinered.png');
 
 // --- FLAVOR CONSTANTS ---
@@ -206,6 +207,7 @@ export const products: Product[] = [
   },
 
   // --- FUEL* ---
+  // FIXED: Changed extension to .svg to match your file upload
   {
     id: 'fuel-bar',
     range: 'Fuel*',
@@ -219,15 +221,15 @@ export const products: Product[] = [
     caseLabel: 'Box of 12 Bites',
     format: '60g Bite',
     comingSoon: true,
-    image: localProduct(`Fuel-Peanut-Butter.png`), 
+    image: localProduct(`fuel-peanut-butter.svg`), 
     variants: [
-        { name: 'Peanut Butter Crunch', image: localProduct(`Fuel-Peanut-Butter.png`) },
-        { name: 'Choc Chip Cookie Dough', image: localProduct(`Fuel-Peanut-Butter.png`) },
-        { name: 'Salted Caramel', image: localProduct(`Fuel-Peanut-Butter.png`) },
-        { name: 'Double Choc Mint', image: localProduct(`Fuel-Peanut-Butter.png`) }
+        { name: 'Peanut Butter Crunch', image: localProduct(`fuel-peanut-butter.svg`) },
+        { name: 'Choc Chip Cookie Dough', image: localProduct(`fuel-peanut-butter.svg`) },
+        { name: 'Salted Caramel', image: localProduct(`fuel-peanut-butter.svg`) },
+        { name: 'Double Choc Mint', image: localProduct(`fuel-peanut-butter.svg`) }
     ],
     images: [
-        localProduct(`Fuel-Peanut-Butter.png`)
+        localProduct(`fuel-peanut-butter.svg`)
     ],
     goals: ['Recovery', 'Energy'],
     flavorProfile: 'Rich',
@@ -361,7 +363,7 @@ export const products: Product[] = [
       price: 17.95,
       compareAtPrice: 22.50,
       comingSoon: true,
-      image: localProduct(`Fuel-Peanut-Butter.png`),
+      image: localProduct(`fuel-peanut-butter.svg`), // FIXED: .svg
       goals: ['Snack', 'Protein'],
       benefits: ['Healthy snacking', 'Meal prep ready'],
       usage: { when: 'Snack time', how: 'Eat' },
@@ -498,10 +500,11 @@ export const products: Product[] = [
       title: 'Founders Edition Hoodie',
       description: 'Heavyweight 500gsm Hemp/Organic Cotton blend. The original.',
       price: 79.95,
-      image: localProduct(`merch-hoodie-black.png`), 
+      // FIXED: Changed to .svg and lowercase
+      image: localProduct(`merch-hoodie-black.svg`), 
       variants: [
-          { name: 'Black', image: localProduct(`merch-hoodie-black.png`) },
-          { name: 'White', image: localProduct(`merch-hoodie-black.png`) },
+          { name: 'Black', image: localProduct(`merch-hoodie-black.svg`) },
+          { name: 'White', image: localProduct(`merch-hoodie-black.svg`) },
       ],
       bundleComponents: [
           { name: "Size", options: HOODIE_SIZES },
@@ -519,10 +522,11 @@ export const products: Product[] = [
       title: 'Founders Edition Tee',
       description: 'Boxy fit. 280gsm Hemp blend. Minimalist branding.',
       price: 49.95,
-      image: localProduct(`merch-hoodie-black.png`),
+      // FIXED: Changed to .svg and lowercase
+      image: localProduct(`merch-hoodie-black.svg`),
       variants: [
-          { name: 'Black', image: localProduct(`merch-hoodie-black.png`) },
-          { name: 'White', image: localProduct(`merch-hoodie-black.png`) }
+          { name: 'Black', image: localProduct(`merch-hoodie-black.svg`) },
+          { name: 'White', image: localProduct(`merch-hoodie-black.svg`) }
       ],
       bundleComponents: [
           { name: "Size", options: ['S', 'M', 'L', 'XL', 'XXL'] },
@@ -539,12 +543,12 @@ export const products: Product[] = [
       title: 'Dad Hat',
       description: 'Unstructured 6-panel. For the street, not the gym.',
       price: 34.95,
-      image: localProduct(`merch-hoodie-black.png`),
+      image: localProduct(`merch-hoodie-black.svg`), // Placeholder
       variants: [
-          { name: 'Pink Camo', image: localProduct(`merch-hoodie-black.png`) },
-          { name: 'Green Camo', image: localProduct(`merch-hoodie-black.png`) },
-          { name: 'White Camo', image: localProduct(`merch-hoodie-black.png`) },
-          { name: 'Black Punk', image: localProduct(`merch-hoodie-black.png`) }
+          { name: 'Pink Camo', image: localProduct(`merch-hoodie-black.svg`) },
+          { name: 'Green Camo', image: localProduct(`merch-hoodie-black.svg`) },
+          { name: 'White Camo', image: localProduct(`merch-hoodie-black.svg`) },
+          { name: 'Black Punk', image: localProduct(`merch-hoodie-black.svg`) }
       ],
       usage: { when: 'Sunny days', how: 'On head', proTip: 'Curve the brim' },
       ingredientsList: '100% Cotton Twill.',
@@ -784,7 +788,7 @@ Drip° is a scientifically robust evolution of the functional soda. It solves th
     category: 'Nutrition',
     excerpt: 'Solving the "incomplete protein" fallacy. How Hemp + Pea creates a complete amino acid profile for recovery.',
     readTime: '5 min read',
-    image: localProduct(`Fuel-Peanut-Butter.png`),
+    image: localProduct(`fuel-peanut-butter.svg`), // FIXED: .svg
     date: 'Sep 15, 2023',
     author: 'Dr. Liam H.',
     content: `
