@@ -2,6 +2,7 @@
 
 
 
+
 import { Product, BlogPost, UseCase, Review, ProductComparison, Currency, Reward, Challenge, User } from './types';
 
 // --- CURRENCY HELPERS ---
@@ -26,18 +27,15 @@ export const formatPrice = (priceInAud: number, currency: Currency): string => {
 };
 
 // --- IMAGE HELPERS ---
-// Helper to use local path if available
+// Helper to use local path
 const localProduct = (filename: string) => `/images/Products/${filename}`;
-
-// Using PNGs as provided by user
-const PLACEHOLDER_EXT = '.png'; 
 
 const unsplash = (id: string) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=800`;
 
 // --- FLAVOR CONSTANTS (UPDATED) ---
 const RECOVERY_FLAVORS = ['Watermelon Smash', 'Blue Raspberry', 'Strawberry Kiwi', 'Lush Lemonade'];
 const ENERGIZE_FLAVORS = ['Sour Watermelon', 'Mango Charge', 'Pine Volt', 'Lychee Burst'];
-const DRIP_FLAVORS = ['Lychee', 'Kakadu Plum', 'Passionfruit', 'Guava'];
+const DRIP_FLAVORS = ['Lychee Burst', 'Kakadu C Fizz', 'Passionfruit Pulp', 'Guava Sunrise'];
 const FUEL_FLAVORS = ['Peanut Butter Crunch', 'Choc Chip Cookie Dough', 'Salted Caramel', 'Double Choc Mint'];
 
 // --- MERCH OPTIONS ---
@@ -67,15 +65,15 @@ export const products: Product[] = [
     compareAtPrice: 35.00,
     format: '10 Pack',
     comingSoon: true,
-    image: localProduct(`Recovery-Watermelon-Smash${PLACEHOLDER_EXT}`), 
+    image: localProduct(`Recovery-Watermelon-Smash.png`), 
     variants: [ 
-        { name: 'Watermelon Smash', image: localProduct(`Recovery-Watermelon-Smash${PLACEHOLDER_EXT}`) },
-        { name: 'Blue Raspberry', image: localProduct(`Recovery-Blue-Raspberry${PLACEHOLDER_EXT}`) },
-        { name: 'Strawberry Kiwi', image: localProduct(`Recovery-Strawberry-Kiwi${PLACEHOLDER_EXT}`) },
-        { name: 'Lush Lemonade', image: localProduct(`Recovery-Lush-Lemonade${PLACEHOLDER_EXT}`) }
+        { name: 'Watermelon Smash', image: localProduct(`Recovery-Watermelon-Smash.png`) },
+        { name: 'Blue Raspberry', image: localProduct(`Recovery-Blue-Raspberry.png`) },
+        { name: 'Strawberry Kiwi', image: localProduct(`Recovery-Strawberry-Kiwi.png`) },
+        { name: 'Lush Lemonade', image: localProduct(`Recovery-Lush-Lemonade.png`) }
     ],
     images: [
-        localProduct(`Recovery-Watermelon-Smash${PLACEHOLDER_EXT}`),
+        localProduct(`Recovery-Watermelon-Smash.png`),
     ],
     tag: 'Best Seller',
     goals: ['Recovery', 'Hydration'],
@@ -120,15 +118,15 @@ export const products: Product[] = [
     caseLabel: 'Box of 20 Pouches',
     format: '90g Pouch',
     comingSoon: true,
-    image: localProduct(`Energize-Lychee-Burst${PLACEHOLDER_EXT}`),
+    image: localProduct(`Energize-Lychee-Burst.png`),
     variants: [
-        { name: 'Lychee Burst', image: localProduct(`Energize-Lychee-Burst${PLACEHOLDER_EXT}`) },
-        { name: 'Pine Volt', image: localProduct(`Energize-Pine-Volt${PLACEHOLDER_EXT}`) },
-        { name: 'Sour Watermelon', image: localProduct(`Energize-Sour-Watermelon${PLACEHOLDER_EXT}`) },
-        { name: 'Mango Charge', image: localProduct(`Energize-Mango-Charge${PLACEHOLDER_EXT}`) }
+        { name: 'Lychee Burst', image: localProduct(`Energize-Lychee-Burst.png`) },
+        { name: 'Pine Volt', image: localProduct(`Energize-Pine-Volt.png`) },
+        { name: 'Sour Watermelon', image: localProduct(`Energize-Sour-Watermelon.png`) },
+        { name: 'Mango Charge', image: localProduct(`Energize-Mango-Charge.png`) }
     ],
     images: [
-        localProduct(`Energize-Lychee-Burst${PLACEHOLDER_EXT}`)
+        localProduct(`Energize-Lychee-Burst.png`)
     ],
     tag: 'New Tech',
     goals: ['Energy', 'Focus'],
@@ -171,15 +169,15 @@ export const products: Product[] = [
     caseLabel: 'Slab of 24 Cans',
     format: '355ml Can',
     comingSoon: true,
-    image: localProduct(`Drip-Guava-Sunrise${PLACEHOLDER_EXT}`),
+    image: localProduct(`Drip-Guava-Sunrise.png`),
     variants: [
-        { name: 'Guava', image: localProduct(`Drip-Guava-Sunrise${PLACEHOLDER_EXT}`) },
-        { name: 'Passionfruit', image: localProduct(`Drip-Passionfruit-Pulp${PLACEHOLDER_EXT}`) },
-        { name: 'Lychee', image: localProduct(`Drip-Lychee-Burst${PLACEHOLDER_EXT}`) },
-        { name: 'Kakadu Plum', image: localProduct(`Drip-Kakadu-C-Fizz${PLACEHOLDER_EXT}`) }
+        { name: 'Guava Sunrise', image: localProduct(`Drip-Guava-Sunrise.png`) },
+        { name: 'Passionfruit Pulp', image: localProduct(`Drip-Passionfruit-Pulp.png`) },
+        { name: 'Lychee Burst', image: localProduct(`Drip-Lychee-Burst.png`) },
+        { name: 'Kakadu C Fizz', image: localProduct(`Drip-Kakadu-C-Fizz.png`) }
     ],
     images: [
-        localProduct(`Drip-Guava-Sunrise${PLACEHOLDER_EXT}`)
+        localProduct(`Drip-Guava-Sunrise.png`)
     ],
     goals: ['Hydration'],
     flavorProfile: 'Citrus',
@@ -222,16 +220,15 @@ export const products: Product[] = [
     caseLabel: 'Box of 12 Bites',
     format: '60g Bite',
     comingSoon: true,
-    // Note: User hasn't provided specific Fuel images yet, keeping placeholder logic pointing to product folder just in case or generic.
-    image: localProduct(`fuel-peanut-butter.svg`), 
+    image: localProduct(`Fuel-Peanut-Butter.png`), 
     variants: [
-        { name: 'Peanut Butter Crunch', image: localProduct(`fuel-peanut-butter.svg`) },
-        { name: 'Choc Chip Cookie Dough', image: localProduct(`fuel-peanut-butter.svg`) },
-        { name: 'Salted Caramel', image: localProduct(`fuel-peanut-butter.svg`) },
-        { name: 'Double Choc Mint', image: localProduct(`fuel-peanut-butter.svg`) }
+        { name: 'Peanut Butter Crunch', image: localProduct(`Fuel-Peanut-Butter.png`) },
+        { name: 'Choc Chip Cookie Dough', image: localProduct(`Fuel-Peanut-Butter.png`) },
+        { name: 'Salted Caramel', image: localProduct(`Fuel-Peanut-Butter.png`) },
+        { name: 'Double Choc Mint', image: localProduct(`Fuel-Peanut-Butter.png`) }
     ],
     images: [
-        localProduct(`fuel-peanut-butter.svg`)
+        localProduct(`Fuel-Peanut-Butter.png`)
     ],
     goals: ['Recovery', 'Energy'],
     flavorProfile: 'Rich',
@@ -271,7 +268,7 @@ export const products: Product[] = [
       price: 29.95,
       compareAtPrice: 34.45,
       comingSoon: true,
-      image: unsplash('1596464716127-f2a82984de30'), // Keep generic image for bundle or create a specific one
+      image: localProduct(`Recovery-Watermelon-Smash.png`), // Using recovery as hero for bundle
       goals: ['Recovery', 'Energy', 'Hydration'],
       benefits: ['Complete sampling of the range', 'Perfect for first time users'],
       usage: { when: 'All day', how: 'Use as directed per product' },
@@ -291,7 +288,7 @@ export const products: Product[] = [
       price: 34.95,
       compareAtPrice: 39.95,
       comingSoon: true,
-      image: unsplash('1517836357463-d25dfeac3438'),
+      image: localProduct(`Energize-Lychee-Burst.png`),
       goals: ['Energy', 'Recovery'],
       benefits: ['Pre & Post workout covered', 'Save on essentials'],
       usage: { when: 'Pre & Post Workout', how: 'Energize^ before, Recovery+ after.' },
@@ -309,7 +306,7 @@ export const products: Product[] = [
       longDescription: "Includes:\n- 4x Mixed Recovery+ Sachets\n\n**Price: $9.95**",
       price: 9.95,
       comingSoon: true,
-      image: localProduct(`Recovery-Watermelon-Smash${PLACEHOLDER_EXT}`), // Using recovery image
+      image: localProduct(`Recovery-Watermelon-Smash.png`), 
       goals: ['Recovery'],
       benefits: ['Try all flavours', 'Travel friendly'],
       usage: { when: 'Post Workout', how: 'Mix with water' },
@@ -327,7 +324,7 @@ export const products: Product[] = [
       price: 59.95,
       compareAtPrice: 65.00, 
       comingSoon: true,
-      image: unsplash('1552674605-4d4378f4ac6e'),
+      image: localProduct(`Drip-Guava-Sunrise.png`),
       goals: ['Performance'],
       benefits: ['Complete stack', 'Maximum results'],
       usage: { when: 'Daily', how: 'Follow individual protocols' },
@@ -347,7 +344,7 @@ export const products: Product[] = [
       price: 38.95,
       compareAtPrice: 54.00,
       comingSoon: true,
-      image: unsplash('1625772242095-888279808e75'),
+      image: localProduct(`Drip-Lychee-Burst.png`),
       goals: ['Hydration', 'Gut Health'],
       benefits: ['Stock up the fridge', 'Great for sharing'],
       usage: { when: 'Anytime', how: 'Serve cold' },
@@ -365,7 +362,7 @@ export const products: Product[] = [
       price: 17.95,
       compareAtPrice: 22.50,
       comingSoon: true,
-      image: unsplash('1606313146237-7f3c47311756'),
+      image: localProduct(`Fuel-Peanut-Butter.png`),
       goals: ['Snack', 'Protein'],
       benefits: ['Healthy snacking', 'Meal prep ready'],
       usage: { when: 'Snack time', how: 'Eat' },
@@ -502,10 +499,10 @@ export const products: Product[] = [
       title: 'Founders Edition Hoodie',
       description: 'Heavyweight 500gsm Hemp/Organic Cotton blend. The original.',
       price: 79.95,
-      image: localProduct(`merch-hoodie-black.svg`), // Still generic placeholder
+      image: localProduct(`merch-hoodie-black.png`), 
       variants: [
-          { name: 'Black', image: localProduct(`merch-hoodie-black.svg`) },
-          { name: 'White', image: localProduct(`merch-hoodie-black.svg`) },
+          { name: 'Black', image: localProduct(`merch-hoodie-black.png`) },
+          { name: 'White', image: localProduct(`merch-hoodie-black.png`) },
       ],
       bundleComponents: [
           { name: "Size", options: HOODIE_SIZES },
@@ -523,10 +520,10 @@ export const products: Product[] = [
       title: 'Founders Edition Tee',
       description: 'Boxy fit. 280gsm Hemp blend. Minimalist branding.',
       price: 49.95,
-      image: localProduct(`merch-hoodie-black.svg`),
+      image: localProduct(`merch-hoodie-black.png`),
       variants: [
-          { name: 'Black', image: localProduct(`merch-hoodie-black.svg`) },
-          { name: 'White', image: localProduct(`merch-hoodie-black.svg`) }
+          { name: 'Black', image: localProduct(`merch-hoodie-black.png`) },
+          { name: 'White', image: localProduct(`merch-hoodie-black.png`) }
       ],
       bundleComponents: [
           { name: "Size", options: ['S', 'M', 'L', 'XL', 'XXL'] },
@@ -543,12 +540,12 @@ export const products: Product[] = [
       title: 'Dad Hat',
       description: 'Unstructured 6-panel. For the street, not the gym.',
       price: 34.95,
-      image: localProduct(`merch-hoodie-black.svg`),
+      image: localProduct(`merch-hoodie-black.png`),
       variants: [
-          { name: 'Pink Camo', image: localProduct(`merch-hoodie-black.svg`) },
-          { name: 'Green Camo', image: localProduct(`merch-hoodie-black.svg`) },
-          { name: 'White Camo', image: localProduct(`merch-hoodie-black.svg`) },
-          { name: 'Black Punk', image: localProduct(`merch-hoodie-black.svg`) }
+          { name: 'Pink Camo', image: localProduct(`merch-hoodie-black.png`) },
+          { name: 'Green Camo', image: localProduct(`merch-hoodie-black.png`) },
+          { name: 'White Camo', image: localProduct(`merch-hoodie-black.png`) },
+          { name: 'Black Punk', image: localProduct(`merch-hoodie-black.png`) }
       ],
       usage: { when: 'Sunny days', how: 'On head', proTip: 'Curve the brim' },
       ingredientsList: '100% Cotton Twill.',
@@ -693,7 +690,7 @@ export const blogPosts: BlogPost[] = [
     category: 'Performance',
     excerpt: 'Why caffeine alone isn’t enough. Exploring the synergy between L-Tyrosine and Citrulline Malate for sustained cognitive drive.',
     readTime: '8 min read',
-    image: localProduct(`Energize-Lychee-Burst${PLACEHOLDER_EXT}`),
+    image: localProduct(`Energize-Lychee-Burst.png`),
     date: 'Oct 12, 2023',
     author: 'Dr. Liam H.',
     content: `
@@ -742,7 +739,7 @@ Energize^ is not a compromise between endurance and power, but a specialized sol
     category: 'Gut Health',
     excerpt: 'Moving beyond basic kombucha. How spore-based probiotics and dual-fiber matrices solve the survivability crisis.',
     readTime: '6 min read',
-    image: localProduct(`Drip-Guava-Sunrise${PLACEHOLDER_EXT}`),
+    image: localProduct(`Drip-Guava-Sunrise.png`),
     date: 'Sep 28, 2023',
     author: 'Sarah J., Nutritionist',
     content: `
@@ -790,7 +787,7 @@ Drip° is a scientifically robust evolution of the functional soda. It solves th
     category: 'Nutrition',
     excerpt: 'Solving the "incomplete protein" fallacy. How Hemp + Pea creates a complete amino acid profile for recovery.',
     readTime: '5 min read',
-    image: localProduct(`fuel-peanut-butter.svg`),
+    image: localProduct(`Fuel-Peanut-Butter.png`),
     date: 'Sep 15, 2023',
     author: 'Dr. Liam H.',
     content: `
@@ -834,7 +831,7 @@ Fuel* moves away from the "single magic ingredient" model toward a synergistic s
     category: 'Recovery',
     excerpt: 'From mTOR activation to cortisol management. The stoichiometry of the 3:1 Carbohydrate-to-Protein ratio.',
     readTime: '7 min read',
-    image: localProduct(`Recovery-Watermelon-Smash${PLACEHOLDER_EXT}`),
+    image: localProduct(`Recovery-Watermelon-Smash.png`),
     date: 'Aug 20, 2023',
     author: 'Dr. Liam H.',
     content: `
