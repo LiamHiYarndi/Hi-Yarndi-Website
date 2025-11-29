@@ -1,15 +1,11 @@
-
 import React from 'react';
 import { Button } from './Button';
 import { ChevronRight, Play } from 'lucide-react';
 
 export const Hero: React.FC = () => {
-  // --- GOOGLE DRIVE SETUP ---
-  // 1. Share file as "Anyone with link"
-  // 2. Copy the ID (the random characters between /d/ and /view)
-  // 3. Paste it below
-  
- const MASCOT_URL = "/images/logos/mascot-duck.png";
+  // --- MASCOT IMAGE SETUP ---
+  // We added '?v=2' to force the browser to reload the image if it was stuck
+  const MASCOT_URL = "/images/logos/mascot-duck.png?v=2";
 
   return (
     <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden pt-10 pb-20 md:py-0">
