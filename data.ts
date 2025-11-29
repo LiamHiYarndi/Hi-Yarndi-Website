@@ -22,13 +22,12 @@ export const formatPrice = (priceInAud: number, currency: Currency): string => {
 };
 
 // --- IMAGE HELPERS ---
-// CORRECTED: Uses lowercase 'products' to match your GitHub folder exactly.
-const localProduct = (filename: string) => `/images/products/${filename}`;
-const localLogo = (filename: string) => `/images/logos/${filename}`;
+// FIXED: Changed to 'Images' (Capital I) to match your Finder folder structure
+const localProduct = (filename: string) => `/Images/products/${filename}`;
+const localLogo = (filename: string) => `/Images/logos/${filename}`;
 const unsplash = (id: string) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=800`;
 
 // --- LOGO EXPORT ---
-// Use this in your Navbar or Footer components
 export const BRAND_LOGO = localLogo('Logooutlinered.png');
 
 // --- FLAVOR CONSTANTS ---
@@ -64,11 +63,10 @@ export const products: Product[] = [
     compareAtPrice: 35.00,
     format: '10 Pack',
     comingSoon: true,
-    // UPDATED: Set to 'Recovery-Blue-Raspberry.png' as seen in your upload
     image: localProduct(`Recovery-Blue-Raspberry.png`), 
     variants: [ 
-        { name: 'Blue Raspberry', image: localProduct(`Recovery-Blue-Raspberry.png`) }, // Confirmed file
-        { name: 'Strawberry Kiwi', image: localProduct(`Recovery-Strawberry-Kiwi.png`) }, // Confirmed file
+        { name: 'Blue Raspberry', image: localProduct(`Recovery-Blue-Raspberry.png`) }, 
+        { name: 'Strawberry Kiwi', image: localProduct(`Recovery-Strawberry-Kiwi.png`) }, 
         { name: 'Watermelon Smash', image: localProduct(`Recovery-Watermelon-Smash.png`) },
         { name: 'Lush Lemonade', image: localProduct(`Recovery-Lush-Lemonade.png`) }
     ],
@@ -119,11 +117,10 @@ export const products: Product[] = [
     caseLabel: 'Box of 20 Pouches',
     format: '90g Pouch',
     comingSoon: true,
-    // UPDATED: Set to 'Energize-Sour-Watermelon.png' as seen in your upload
     image: localProduct(`Energize-Sour-Watermelon.png`),
     variants: [
-        { name: 'Sour Watermelon', image: localProduct(`Energize-Sour-Watermelon.png`) }, // Confirmed file
-        { name: 'Mango Charge', image: localProduct(`Energize-Mango-Charge.png`) }, // Confirmed file
+        { name: 'Sour Watermelon', image: localProduct(`Energize-Sour-Watermelon.png`) }, 
+        { name: 'Mango Charge', image: localProduct(`Energize-Mango-Charge.png`) }, 
         { name: 'Lychee Burst', image: localProduct(`Energize-Lychee-Burst.png`) }, 
         { name: 'Pine Volt', image: localProduct(`Energize-Pine-Volt.png`) }
     ],
@@ -171,11 +168,10 @@ export const products: Product[] = [
     caseLabel: 'Slab of 24 Cans',
     format: '355ml Can',
     comingSoon: true,
-    // UPDATED: Set to 'Drip-Lychee-Burst.png' as seen in your upload
     image: localProduct(`Drip-Lychee-Burst.png`),
     variants: [
-        { name: 'Lychee Burst', image: localProduct(`Drip-Lychee-Burst.png`) }, // Confirmed file
-        { name: 'Passionfruit Pulp', image: localProduct(`Drip-Passionfruit-Pulp.png`) }, // Confirmed file
+        { name: 'Lychee Burst', image: localProduct(`Drip-Lychee-Burst.png`) }, 
+        { name: 'Passionfruit Pulp', image: localProduct(`Drip-Passionfruit-Pulp.png`) }, 
         { name: 'Guava Sunrise', image: localProduct(`Drip-Guava-Sunrise.png`) },
         { name: 'Kakadu C Fizz', image: localProduct(`Drip-Kakadu-C-Fizz.png`) }
     ],
