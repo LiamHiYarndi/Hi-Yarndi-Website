@@ -1,8 +1,3 @@
-
-
-
-
-
 import { Product, BlogPost, UseCase, Review, ProductComparison, Currency, Reward, Challenge, User } from './types';
 
 // --- CURRENCY HELPERS ---
@@ -44,6 +39,7 @@ const HOODIE_COLORS = ['Black', 'White']; // Founders Edition
 const HAT_VARIANTS = ['Pink Camo', 'Green Camo', 'White Camo', 'Black Punk'];
 
 // --- ADMIN CREDENTIALS ---
+// WARNING: Do not use real credentials here for production. Move to .env variables later.
 export const ADMIN_CREDENTIALS = {
     email: 'admin@admin.com',
     password: 'YarndiAdmin01'
@@ -56,7 +52,7 @@ export const products: Product[] = [
     range: 'Recovery+',
     title: 'Recovery+',
     subtitle: 'Post-Session Reset',
-    description: 'Powered by Hemp. Magnesium + Electroyltes. The ultimate cool down.',
+    description: 'Powered by Hemp. Magnesium + Electrolytes. The ultimate cool down.',
     longDescription: "**Stop the soreness before it starts.** Recovery+ isn't just hydration; it's a **biological reset button** for your post-game physiology.\n\nWe’ve fused **cold-pressed Australian Hemp Seed Oil** (nature’s most potent anti-inflammatory) with highly bioavailable **Magnesium Citrate** to flush out lactate and calm your nervous system immediately.\n\n**Pricing:**\n- 10 Pack: $25.00",
     price: 25.00, // 10 Pack Price
     wholesalePrice: 12.50, // 50% Margin
@@ -716,11 +712,9 @@ Simultaneously, peripheral fatigue occurs within the muscle fiber. The rapid dea
 
 The most significant feature of the Energize^ formulation is the integration of **500mg of L-Tyrosine** alongside the standard **200mg of Caffeine**.
 
-**Caffeine (200mg): The Neural Driver**  
-Caffeine acts primarily as a non-selective antagonist of adenosine receptors. By blocking these receptors, caffeine prevents the onset of sedation and increases the binding potential of dopamine.
+**Caffeine (200mg): The Neural Driver** Caffeine acts primarily as a non-selective antagonist of adenosine receptors. By blocking these receptors, caffeine prevents the onset of sedation and increases the binding potential of dopamine.
 
-**L-Tyrosine (500mg): The Cognitive Safety Valve**  
-While caffeine increases the utilization of dopamine, it does not increase the supply. L-Tyrosine serves as the precursor to refill this pool. Under acute stress—defined as high-intensity anaerobic exercise—the synthesis of dopamine becomes dependent on the availability of Tyrosine. Research from military trials demonstrates that Tyrosine supplementation specifically protects against the cognitive decline that occurs during these high-stress windows.
+**L-Tyrosine (500mg): The Cognitive Safety Valve** While caffeine increases the utilization of dopamine, it does not increase the supply. L-Tyrosine serves as the precursor to refill this pool. Under acute stress—defined as high-intensity anaerobic exercise—the synthesis of dopamine becomes dependent on the availability of Tyrosine. Research from military trials demonstrates that Tyrosine supplementation specifically protects against the cognitive decline that occurs during these high-stress windows.
 
 ### Nitric Oxide and Ammonia Scavenging: The Citrulline Malate Paradigm
 
@@ -759,8 +753,8 @@ Traditional vegetative strains used in dairy (Lactobacillus) are fragile; they d
 #### 2. The Dual-Fiber Matrix: Inulin and Acacia
 The efficacy and tolerability of a prebiotic beverage are dictated by fermentation kinetics. Drip° employs a blend of Inulin and Acacia Fibre to solve the "bloat" issue.
 
-*   **Inulin (Rapid Fermenter):** Fermented quickly in the proximal colon. While effective, high doses cause sudden gas production.
-*   **Acacia Fibre (Sustained Fermenter):** A complex structure that ferments gradually across the entire length of the colon.
+* **Inulin (Rapid Fermenter):** Fermented quickly in the proximal colon. While effective, high doses cause sudden gas production.
+* **Acacia Fibre (Sustained Fermenter):** A complex structure that ferments gradually across the entire length of the colon.
 
 By combining them, Drip° achieves "Full-Colon Coverage" while mitigating the peak gas velocity associated with single-source inulin products.
 
@@ -772,9 +766,9 @@ Drip° incorporates **Hemp Seed Extract**, introducing a functional amino acid p
 
 Drip° incorporates a botanical triad—**Kudzu, Calendula, and Rosemary**—for active mucosal healing.
 
-*   **Kudzu Root:** Rich in Puerarin, which has been shown to upregulate Tight Junction proteins (Zonula Occludens-1), strengthening the gut barrier against "leaky gut."
-*   **Calendula:** A vulnerary (wound-healing) agent that soothes the mucous membranes.
-*   **Rosemary:** Rich in carnosic acid, a potent antioxidant that prevents lipid peroxidation and extends shelf life naturally.
+* **Kudzu Root:** Rich in Puerarin, which has been shown to upregulate Tight Junction proteins (Zonula Occludens-1), strengthening the gut barrier against "leaky gut."
+* **Calendula:** A vulnerary (wound-healing) agent that soothes the mucous membranes.
+* **Rosemary:** Rich in carnosic acid, a potent antioxidant that prevents lipid peroxidation and extends shelf life naturally.
 
 ### Conclusion
 
@@ -811,8 +805,8 @@ Hemp protein, derived from Cannabis sativa, anchors the formulation. Its primary
 
 The choice of carbohydrate source is critical. Fuel* distinguishes itself by utilizing **Brown Rice Syrup**.
 
-*   **Brown Rice Syrup (Glucose Polymer):** Effectively 100% glucose equivalents. Glucose is absorbed via the SGLT1 transporter and can be used immediately by muscle cells for glycogen resynthesis.
-*   **The Competitor Flaw (Dates/Fructose):** Many "natural" bars rely on dates, which are high in fructose. Fructose must be metabolized by the liver and preferentially restores liver glycogen, not muscle glycogen.
+* **Brown Rice Syrup (Glucose Polymer):** Effectively 100% glucose equivalents. Glucose is absorbed via the SGLT1 transporter and can be used immediately by muscle cells for glycogen resynthesis.
+* **The Competitor Flaw (Dates/Fructose):** Many "natural" bars rely on dates, which are high in fructose. Fructose must be metabolized by the liver and preferentially restores liver glycogen, not muscle glycogen.
 
 For an athlete needing to perform again the next day, the glucose-based substrate of Fuel* is the superior ergogenic aid for muscle recovery.
 
